@@ -20,6 +20,7 @@
 const server = require('./src/app.js');
 const { conn } = require('./src/db.js');
 
+//la responsabilidad de iniciar la aplicacion
 // Syncing all the models at once.
 conn.sync({ force: true }).then(() => {
   server.listen(3001, () => {

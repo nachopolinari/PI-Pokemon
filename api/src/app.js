@@ -6,6 +6,7 @@ const routes = require('./routes/index.js');
 
 require('./db.js');
 
+//la responsabilidad de crear el servidor
 const server = express();
 
 server.name = 'API';
