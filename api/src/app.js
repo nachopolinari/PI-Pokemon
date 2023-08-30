@@ -5,8 +5,7 @@ const morgan = require('morgan');
 const routes = require('./routes/index.js');
 
 require('./db.js');
-
-//la responsabilidad de crear el servidor
+//la responsabilidad de crear el server
 const server = express();
 
 server.name = 'API';

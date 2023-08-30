@@ -12,21 +12,27 @@ module.exports = (sequelize) => {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique:true
     },
     img:{
       type:DataTypes.TEXT,
+      allowNull:false,
     },
     life:{
       type:DataTypes.FLOAT,
+      allowNull:false,
     },
     attack:{
       type:DataTypes.FLOAT,
+      allowNull:false,
     },
     defense:{
       type:DataTypes.FLOAT,
+      allowNull:false,
     },
     speed:{
       type:DataTypes.FLOAT,
+      allowNull:false,
     },
     height:{
       type:DataTypes.FLOAT,

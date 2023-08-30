@@ -22,7 +22,7 @@ const { conn } = require('./src/db.js');
 
 //la responsabilidad de iniciar la aplicacion
 // Syncing all the models at once.
-conn.sync({ force: true }).then(() => {
+conn.sync({ force: true }).then(() => { //la config force:true elimina las tablas creadas en BD y vuelve a crear cada vez q se actualice . lo usaremos durante la prod.desp cambiaremos a alter:true para deploy
   server.listen(3001, () => {
     console.log('%s listening at 3001'); // eslint-disable-line no-console
   });
