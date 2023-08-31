@@ -1,5 +1,5 @@
 const getAllPoke = require('../controllers/getAllPoke')
-const searchPokeByName = require('../controllers/searchPokeByName')
+const getPokeByName = require('../controllers/getPokeByName')
 const getPokeHandler = async (req, res) => {
     // Ruta para obtener detalles de un Pokémon por nombre o ID
     // 📍 GET | /pokemons/name?="..."
@@ -12,7 +12,7 @@ const getPokeHandler = async (req, res) => {
     const { name } = req.query;
 
     const results = name
-        ? await searchPokeByName(name)
+        ? await getPokeByName(name)
         : await getAllPoke()
 
     res.status(200).json(results)

@@ -14,14 +14,15 @@ const getApiPoke = async () => {
         return {
             id: elem.data.id,
             name: elem.data.name,
-            img: elem.data.sprites.other.home.front_default,
+            img: elem.data.sprites.other.home.front_default, //revisar que imagen quiero
             life: elem.data.stats[0].base_stat,
             attack: elem.data.stats[1].base_stat,
             defense: elem.data.stats[2].base_stat,
             speed: elem.data.stats[5].base_stat,
-            height: elem.data.height,
-            weight: elem.data.weight,
-            types: elem.data.types.map(t => t.type.name)
+            height: (elem.data.height) / 10, //paso de decimetros a metros
+            weight: (elem.data.weight) / 10, //paso de decigramos a kg.
+            types: elem.data.types.map(t => t.type.name),
+            created: false
         };
     });
     return apiPoke;
