@@ -40,7 +40,11 @@ module.exports = (sequelize) => {
     weight: {
       type: DataTypes.FLOAT,
     },
-    
+    created: {//esta marca me servira para filtrar los creados por mi de los que vienen de la api ext
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
+    },
+
   }, {
     timestamps: false
   });
