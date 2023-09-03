@@ -15,7 +15,7 @@ const getPokeByIdHandler = async (req, res) => {
         res.status(200).json(pokeById);
 
     } catch (error) {
-        res.status(400).json({ error: error.message });
+        res.status(404).json({ error: error.message });
     }
 
 

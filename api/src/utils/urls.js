@@ -4,6 +4,8 @@ const API_POKEMON_TYPE = "https://pokeapi.co/api/v2/type";//Esta constante almac
 
 const API_POKEMON_NAME_OR_ID = "https://pokeapi.co/api/v2/pokemon/";//Esta constante almacena la URL base que te permite acceder a información detallada sobre un Pokémon específico. Puedes completar esta URL con el nombre o el ID de un Pokémon para obtener detalles como sus estadísticas, habilidades, evoluciones y más.
 
+
+
 module.exports = {
   API_POKEMON,
   API_POKEMON_TYPE,

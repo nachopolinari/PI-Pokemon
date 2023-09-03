@@ -28,6 +28,4 @@ const getApiPoke = async () => {
     return apiPoke;
 };
 
-module.exports = {
-    getApiPoke
-};
+module.exports =  {getApiPoke};
