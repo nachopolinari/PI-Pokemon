@@ -1,0 +1,11 @@
+.cardsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content:space-around;
+    gap: 20px;
+    padding: 20px;
+    max-width: 1200px; /* Ajusta el ancho máximo según tus necesidades */
+    margin: 0 auto;
+    
+
+  }
