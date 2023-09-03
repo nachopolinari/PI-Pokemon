@@ -5,10 +5,10 @@ const { getAllPoke } = require('../controllers/getAllPoke');
 //2- los va a filtrar por type (devuelve un array de pokemones)
 //3- itera cada poke.types con el forEach si el elem iterado incluye el type del argumento (true) retorna check true y el filter lo va a ir agregando al array llamado "typesFilter"
 //4- finalmente retorna typesFilter
-const searchType = (type) => {
+const searchType = async (type) => {
 
     try {
-        const pokemons =  getAllPoke();
+        const pokemons = await getAllPoke();
         const typesFilter = pokemons.filter(poke => {
 
             let check = false;

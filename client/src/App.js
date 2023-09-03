@@ -1,9 +1,8 @@
-import './App.css';
 
 function App() {
   return (
     <div className="App">
-      <h1>Henry Pokemon by Nacho Polinari</h1>
+      <h1>Todo ok</h1>
     </div>
   );
 }
