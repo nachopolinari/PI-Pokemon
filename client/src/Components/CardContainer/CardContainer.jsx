@@ -4,7 +4,9 @@ import { useSelector } from 'react-redux'
 
 
 const CardContainer = () => {
+
     const pokemonsRender = useSelector(state => state.pokemonsRender)
+    
     return (
         <div className={style.cardsContainer}>
             {pokemonsRender.map(pokemon => {
