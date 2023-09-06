@@ -945,7 +945,7 @@ const rootReducer = (state = initialState, action) => {
         case GET_POKEMON_BY_ID:
             return {
                 ...state,
-                pokemonsRender: action.payload
+                pokemonsRender: [action.payload, ...state.pokemonsRender]
             }
         default:
             return { ...state };

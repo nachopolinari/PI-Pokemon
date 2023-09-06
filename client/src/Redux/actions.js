@@ -12,7 +12,7 @@ export const getPokemons = () => {
     };
 };
 
-export const getPokemonID = () => {
+export const getPokemonID = (id) => {
     return async function (dispatch) {
         const apiData = await axios.get(`http://localhost:3001/pokemons/${id}`);
         const pokemonID = apiData.data;
