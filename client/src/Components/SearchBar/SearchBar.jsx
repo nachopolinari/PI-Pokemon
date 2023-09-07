@@ -1,5 +1,6 @@
 import style from './SearchBar.module.css';
 import { useState } from 'react';
+import {Link} from 'react-router-dom'
 
 const SearchBar = ({ onSearch }) => {
     const [searchValue, setSearchValue] = useState('');
@@ -29,7 +30,9 @@ const SearchBar = ({ onSearch }) => {
                 <option value="name">Nombre</option>
                 <option value="id">ID</option>
             </select>
+            <Link to="/home">
             <button onClick={handleSearch}>Buscar</button>
+            </Link>
         </div>
     );
 };

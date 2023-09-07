@@ -22,7 +22,12 @@ export const getPokemonID = (query) => {
             // Si query es una cadena, buscar por nombre
             apiData = await axios.get(`http://localhost:3001/pokemons?name=${query}`);
         }
-        const pokemonData = apiData.data;
+        let pokemonData = apiData.data;
+
+        if (!Array.isArray(pokemonData)) {
+            // Si no es un array, transformarlo en un array
+            pokemonData = [pokemonData];
+        }
         dispatch({ type: GET_POKEMON_BY_ID, payload: pokemonData });
     };
 };

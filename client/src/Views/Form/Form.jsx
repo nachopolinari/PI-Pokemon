@@ -60,8 +60,8 @@ const Form = () => {
         //---------valida life-----------
         if (!/^.+$/.test(form.life)) {
             newErrors.life = 'Cannot be empty.';
-        } else if (!Number(form.life) || form.life < 0 || form.life > 250) {
-            newErrors.life = 'Must contain a number between 0 and 250.';
+        } else if (!Number(form.life) || form.life < 1 || form.life > 250) {
+            newErrors.life = 'Must contain a number between 1 and 250.';
         } else { newErrors.life = '' }
         //----------------valida attack------------
         if (!/^.+$/.test(form.attack)) {
@@ -107,49 +107,49 @@ const Form = () => {
             <h1>Crea tu propio Pokemon!!</h1>
             <div>
                 <label htmlFor="">Name: </label>
-                <input type="text" name="name" value={form.name} onChange={changeHandler} />
+                <input type="text" name="name" value={form.name} onChange={changeHandler} placeholder=''/>
                 <span>{errors.name}</span>
             </div>
             <br /> {/*Cambiar esto por CSS */}
             <div>
                 <label htmlFor="">Image: </label>
-                <input type="text" name="img" value={form.img} onChange={changeHandler} />
+                <input type="text" name="img" value={form.img} onChange={changeHandler} placeholder='https://pokemon-image.com'/>
                 <span>{errors.img}</span>
             </div>
             <br /> {/*Cambiar esto por CSS */}
             <div>
                 <label htmlFor="">Life: </label>
-                <input type="text" name="life" value={form.life} onChange={changeHandler} />
+                <input type="text" name="life" value={form.life} onChange={changeHandler} placeholder='1-250'/>
                 <span>{errors.life}</span>
             </div>
             <br /> {/*Cambiar esto por CSS */}
             <div>
                 <label htmlFor="">Attack: </label>
-                <input type="text" name="attack" value={form.attack} onChange={changeHandler} />
+                <input type="text" name="attack" value={form.attack} onChange={changeHandler} placeholder='10-190'/>
                 <span>{errors.attack}</span>
             </div>
             <br /> {/*Cambiar esto por CSS */}
             <div>
                 <label htmlFor="">Defense: </label>
-                <input type="text" name="defense" value={form.defense} onChange={changeHandler} />
+                <input type="text" name="defense" value={form.defense} onChange={changeHandler} placeholder='10-190'/>
                 <span>{errors.defense}</span>
             </div>
             <br /> {/*Cambiar esto por CSS */}
             <div>
                 <label htmlFor="">Speed: </label>
-                <input type="text" name="speed" value={form.speed} onChange={changeHandler} />
+                <input type="text" name="speed" value={form.speed} onChange={changeHandler} placeholder='10-190'/>
                 <span>{errors.speed}</span>
             </div>
             <br /> {/*Cambiar esto por CSS */}
             <div>
                 <label htmlFor="">Height: </label>
-                <input type="text" name="height" value={form.height} onChange={changeHandler} />
+                <input type="text" name="height" value={form.height} onChange={changeHandler} placeholder='10-190'/>
                 <span>{errors.height}</span>
             </div>
             <br /> {/*Cambiar esto por CSS */}
             <div>
                 <label htmlFor="">Weight: </label>
-                <input type="text" name="weight" value={form.weight} onChange={changeHandler} />
+                <input type="text" name="weight" value={form.weight} onChange={changeHandler} placeholder='100-1000'/>
                 <span>{errors.weight}</span>
             </div>
             <br /> {/*Cambiar esto por CSS */}
