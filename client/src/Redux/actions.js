@@ -12,10 +12,18 @@ export const getPokemons = () => {
     };
 };
 
-export const getPokemonID = (id) => {
+export const getPokemonID = (query) => {
     return async function (dispatch) {
-        const apiData = await axios.get(`http://localhost:3001/pokemons/${id}`);
-        const pokemonID = apiData.data;
-        dispatch({ type: GET_POKEMON_BY_ID, payload: pokemonID });
+        let apiData;
+        if (!isNaN(query)) {
+            // Si query es un número, buscar por ID
+            apiData = await axios.get(`http://localhost:3001/pokemons/${query}`);
+        } else {
+            // Si query es una cadena, buscar por nombre
+            apiData = await axios.get(`http://localhost:3001/pokemons?name=${query}`);
+        }
+        const pokemonData = apiData.data;
+        dispatch({ type: GET_POKEMON_BY_ID, payload: pokemonData });
     };
 };
+

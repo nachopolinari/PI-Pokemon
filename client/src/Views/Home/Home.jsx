@@ -9,7 +9,7 @@ const Home = () => {
 
     useEffect(() => {
         dispatch(getPokemons());
-    }, [dispatch])
+    }, [dispatch]);
 
     return (
         <div>Estoy en Home:

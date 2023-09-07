@@ -32,41 +32,6 @@ const Form = () => {
         validate({ ...form, [property]: value } /*para remplazar este truco podria poner el validate dentro de un useEffect que mire la actualizacion del estado */)
     }
 
-    // const validate = (form) => {
-    //     if (!/^.{3,10}$/.test(form.name)) {
-    //         setErrors({ ...errors, name: 'Cannot be empty and must have between 3 and 10 characters' });
-    //     }
-    //     if (!/^[A-Za-z]+$/.test(form.name)) {
-    //         setErrors({ ...errors, name: 'Cannot contain numbers or special characters.' });
-    //     }
-    //     else {
-    //         setErrors({ ...errors, name: '' });
-    //     }
-
-
-    //     if (!/^(https?:\/\/)?([\w\d]+\.)?[\w\d]+\.\w{2,}(\/.*)?$/.test(form.img)) {
-    //         setErrors({ ...errors, img: 'Por favor, ingresa una URL válida.' });
-    //     }
-    //     if (!/^\s*$/.test(form.img)) {
-    //         setErrors({ ...errors, img: 'Este campo es obligatorio.' });
-    //     }
-    //     else { setErrors({ ...errors, img: '' }) }
-
-
-
-    //     if (!/^.+$/.test(form.life)) {
-    //         setErrors({ ...errors, life: 'cannot be empty' });
-    //     } else {
-    //         // Validar que el campo "life" contenga un número entre 0 y 100
-    //         if (!/^(0|[1-9]\d?|100)$/.test(form.life)) {
-    //             setErrors({ ...errors, life: 'Must contain a number between 0 and 100' });
-    //         } else {
-    //             setErrors({ ...errors, life: '' });
-    //         }
-    //     }
-    // }
-
-
     const validate = (form) => {
         const newErrors = {
             name: '',
@@ -92,15 +57,12 @@ const Form = () => {
             newErrors.img = 'Please enter a valid URL.';
 
         } else { newErrors.img = '' }
-
-
         //---------valida life-----------
         if (!/^.+$/.test(form.life)) {
             newErrors.life = 'Cannot be empty.';
         } else if (!Number(form.life) || form.life < 0 || form.life > 250) {
             newErrors.life = 'Must contain a number between 0 and 250.';
         } else { newErrors.life = '' }
-
         //----------------valida attack------------
         if (!/^.+$/.test(form.attack)) {
             newErrors.attack = 'Cannot be empty.';
@@ -134,68 +96,63 @@ const Form = () => {
         //-----valida type
 
         setErrors(newErrors);
-    }
+    };
+
+    const sumbitHandler = (event) => {
+        event.preventDefault()
+    };
 
     return (
-        <form>
+        <form onSubmit={sumbitHandler}>
             <h1>Crea tu propio Pokemon!!</h1>
             <div>
-
                 <label htmlFor="">Name: </label>
                 <input type="text" name="name" value={form.name} onChange={changeHandler} />
                 <span>{errors.name}</span>
             </div>
             <br /> {/*Cambiar esto por CSS */}
             <div>
-
                 <label htmlFor="">Image: </label>
                 <input type="text" name="img" value={form.img} onChange={changeHandler} />
                 <span>{errors.img}</span>
             </div>
             <br /> {/*Cambiar esto por CSS */}
             <div>
-
                 <label htmlFor="">Life: </label>
                 <input type="text" name="life" value={form.life} onChange={changeHandler} />
                 <span>{errors.life}</span>
             </div>
             <br /> {/*Cambiar esto por CSS */}
             <div>
-
                 <label htmlFor="">Attack: </label>
-                <input type="text" name="attack" value={form.attack} min="0" onChange={changeHandler} />
+                <input type="text" name="attack" value={form.attack} onChange={changeHandler} />
                 <span>{errors.attack}</span>
             </div>
             <br /> {/*Cambiar esto por CSS */}
             <div>
-
                 <label htmlFor="">Defense: </label>
-                <input type="text" name="defense" value={form.defense} min="0" onChange={changeHandler} />
+                <input type="text" name="defense" value={form.defense} onChange={changeHandler} />
                 <span>{errors.defense}</span>
             </div>
             <br /> {/*Cambiar esto por CSS */}
             <div>
-
                 <label htmlFor="">Speed: </label>
-                <input type="text" name="speed" value={form.speed} min="0" onChange={changeHandler} />
+                <input type="text" name="speed" value={form.speed} onChange={changeHandler} />
                 <span>{errors.speed}</span>
             </div>
             <br /> {/*Cambiar esto por CSS */}
-
             <div>
                 <label htmlFor="">Height: </label>
-                <input type="text" name="height" value={form.height} min="0" onChange={changeHandler} />
+                <input type="text" name="height" value={form.height} onChange={changeHandler} />
                 <span>{errors.height}</span>
             </div>
             <br /> {/*Cambiar esto por CSS */}
-
             <div>
                 <label htmlFor="">Weight: </label>
-                <input type="text" name="weight" value={form.weight} min="0" onChange={changeHandler} />
+                <input type="text" name="weight" value={form.weight} onChange={changeHandler} />
                 <span>{errors.weight}</span>
             </div>
             <br /> {/*Cambiar esto por CSS */}
-
             <h4>Elige al menos dos tipos de Pokémon:</h4>
             <div>
                 <label><input type="checkbox" name="pokemonType" value="Fuego" /> Fuego</label>
@@ -207,9 +164,7 @@ const Form = () => {
                 <label><input type="checkbox" name="pokemonType" value="Eléctrico" /> Eléctrico</label>
                 <br />
             </div>
-
             <div>
-
                 <input type="reset" />
                 <input type="submit" value='Enviar' />
             </div>
