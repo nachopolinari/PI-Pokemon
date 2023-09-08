@@ -1,0 +1,11 @@
+.homeContainer {
+
+  background-color: rgb(255,0,0);
+    /* background-repeat: no-repeat; */
+
+    background-position:auto;
+    background-size:cover;
+    background-repeat:no-repeat;
+
+    /* padding: 40px; */
+}

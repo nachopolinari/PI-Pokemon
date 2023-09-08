@@ -1,6 +1,5 @@
 import style from './SearchBar.module.css';
 import { useState } from 'react';
-import {Link} from 'react-router-dom'
 
 const SearchBar = ({ onSearch }) => {
     const [searchValue, setSearchValue] = useState('');
@@ -24,15 +23,16 @@ const SearchBar = ({ onSearch }) => {
                 type='search'
                 value={searchValue}
                 onChange={handleInputChange}
-                placeholder={searchType === 'name' ? 'Nombre del Pokémon' : 'ID del Pokémon'}
+                placeholder= 'Pokemon´s Name or ID'
             />
             <select onChange={handleSearchTypeChange} value={searchType}>
                 <option value="name">Nombre</option>
                 <option value="id">ID</option>
             </select>
-            <Link to="/home">
+            
+            
             <button onClick={handleSearch}>Buscar</button>
-            </Link>
+            
         </div>
     );
 };

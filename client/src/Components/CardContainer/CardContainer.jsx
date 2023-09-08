@@ -11,8 +11,9 @@ const CardContainer = () => {
         <div className={style.cardsContainer}>
             {pokemonsRender.map(pokemon => {
                 return <Card
+                    key={pokemon.id}
                     id={pokemon.id}
-                    name={pokemon.name}
+                    name={pokemon.name.toUpperCase()}
                     img={pokemon.img}
                     types={pokemon.types}
                 />

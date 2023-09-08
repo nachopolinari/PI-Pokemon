@@ -1,12 +1,13 @@
 import { Link } from 'react-router-dom'
+import style from "./Landing.module.css"
 const Landing = () => {
     return (
-        <div>
-            <div>Estoy en Landing</div>
+        <div className={style.landing}>
+           
             <Link to='/home'>
-                <button>IR A HOME</button>
+                <button className={style.buttonStart}>START</button>
             </Link>
-        </div>
+        </div >
     )
 };
 export default Landing;

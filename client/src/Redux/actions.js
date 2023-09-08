@@ -3,8 +3,12 @@ import axios from 'axios';
 
 export const GET_POKEMONS = "GET_POKEMONS";
 export const GET_POKEMON_BY_ID = "GET_POKEMON_BY_ID";
+export const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
+export const SET_TOTAL_PAGES = "SET_TOTAL_PAGES";
+export const ORDER_POKEMONS_BY_NAME = 'ORDER_POKEMONS_BY_NAME';
+export const ORDER_POKEMONS_BY_ATTACK='ORDER_POKEMONS_BY_ATTACK';
 
-export const getPokemons = () => {
+export const getPokemons = (page) => {
     return async function (dispatch) {
         const apiData = await axios.get("http://localhost:3001/pokemons");
         const pokemons = apiData.data;
@@ -29,6 +33,48 @@ export const getPokemonID = (query) => {
             pokemonData = [pokemonData];
         }
         dispatch({ type: GET_POKEMON_BY_ID, payload: pokemonData });
+    };
+};
+
+
+export const orderByName = (value) => {
+    return ({
+        type: ORDER_POKEMONS_BY_NAME,
+        payload:value
+    });
+};
+
+export const orderByAttack=(value)=>{
+return({
+    type: ORDER_POKEMONS_BY_ATTACK,
+    payload:value
+})
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+export const setCurrentPage = (page) => {
+    return {
+        type: SET_CURRENT_PAGE,
+        payload: page,
     };
 };
 

@@ -7,12 +7,12 @@ function App() {
   const { pathname } = useLocation();
   return (
     <div className="App">
-      <h1>Todo ok</h1>
+      
       {pathname !== '/' && <NavBar />}
       <Routes>
         <Route path='/' element={<Landing />} />
         <Route path='/home' element={<Home />} />
-        <Route path='/detail' element={<Detail />} />
+        <Route path='/detail/:id' element={<Detail />} />
         <Route path='/form' element={<Form />} />
       </Routes>
     </div>

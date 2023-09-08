@@ -1,23 +1,26 @@
 .card {
-    width: calc(33.33% - 20px);
+    width: calc(22% - 20px);
     /* Calcula el ancho de las columnas (33.33% con espacio entre ellas) */
     border: 1px solid #ccc;
     padding: 1px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 3px 0px 15px 10px rgba(96, 92, 92, 0.1);
     background-color: #fff;
+    border-radius: 30px;
+
+
 }
 
 .card img {
-    max-width: 100%;
+    max-width: 75%;
     height: auto;
 }
 
 .card h3 {
     font-size: 18px;
-    margin: 5px 0;
+    text-align: center;
 }
 
 .card p {
     font-size: 14px;
-    margin: 5px 0;
+    text-align: center;
 }
