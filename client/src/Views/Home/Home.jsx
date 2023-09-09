@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import CardContainer from "../../Components/CardContainer/CardContainer";
 import { useDispatch, useSelector } from "react-redux";
-import { getPokemons, orderByName, orderByAttack } from '../../Redux/actions'
+import {  getPokemons, orderByName,   getPokemonCreated,getApiPokemon} from '../../Redux/actions'
 import style from './Home.module.css'
 import { Link } from 'react-router-dom';
 import Loading from "../../Components/Loading/Loading";
@@ -13,13 +13,14 @@ import Pagination from "../../Components/Pagination/Pagination";
 const Home = () => {
 
     const dispatch = useDispatch();
-    const currentPage = useSelector(state => state.currentPage);
-    const totalPages = useSelector(state => state.totalPages);
+    // const currentPage = useSelector(state => state.currentPage);
+    // const totalPages = useSelector(state => state.totalPages);
     // const [order,setorder] = useState ("");
 
     useEffect(() => {
-        dispatch(getPokemons(currentPage));
-    }, [dispatch, currentPage]);
+        dispatch(getPokemons());
+    }, [dispatch]);
+
     //----------ORDEN POR NOMBRE------------
     function orderforName(event) {
         let value = event.target.value
@@ -34,19 +35,34 @@ const Home = () => {
         }
     }
     //---------ORDEN POR ATAQUE----------------
-    function orderByAttack(event) {
-        let value = event.target.value
-        if (value === 'default') {
+    // const orderAttack = (event) => {
+
+
+    //     let value = event.target.value
+
+    //     if (value === 'default2') {
+    //         dispatch(getPokemons())
+    //     }
+    //     else {
+
+    //         dispatch(orderAttack(value))
+    //         // setCurrentPage(p=>p=1)
+    //         // setorderattack(`ordenadopscore ${e.target.value}`)
+    //     }
+
+
+    //------------------FILTRO POR CREADO-------------------
+    function filterByCreated(e) {
+        if (e.target.value === 'all') {
             dispatch(getPokemons())
         }
+        else if (e.target.value === 'db') {
+            dispatch(getPokemonCreated())
+        }
         else {
-
-            dispatch(orderByAttack(value))
-            // setCurrentPage(p=>p=1)
-            // setorderattack(`ordenadopscore ${e.target.value}`)
+            dispatch(getApiPokemon())
         }
     }
-
 
     return (
         <div className={style.homeContainer}>
@@ -55,8 +71,8 @@ const Home = () => {
             </div>
             <div className={style.sortsContainer}>
                 {/* Contenido de la barra superior (botones, selectores, etc.) */}
-              
-              {/* -------------------------ORDEN POR NOMBRE------------- */}
+
+                {/* -------------------------ORDEN POR NOMBRE------------- */}
                 <div>
                     <h5 className={style.sortByName}>Sort by Name</h5>
                     <select className="selectshome" onChange={event => orderforName(event)}>
@@ -66,33 +82,50 @@ const Home = () => {
                     </select>
                 </div>
                 {/* -------------------ORDEN POR ATAQUE------------- */}
-                <div>
+                {/* <div>
                         <h5 className={style.sortByAttack}>Sort by Attack</h5>
-                        <select className="selectshome" onChange={event=> orderByAttack(event)}>
-                            <option key='default2' value='default'>Default</option>
+                        <select className="selectshome2" onChange={
+
+                            event => orderAttack(event) console.log(event)
+
+                        }>
+                            <option key='default2' value='default2'>Default</option>
                             <option key='best' value='best'>Best Attack</option>
                             <option key='worst' value='worst'>Worst Attack</option>
                         </select>
-                    </div>
-            </div>
-            {/* --------------------PAGINADO----------------- */}
-            <div>
-                <div className="divpag">
-                    {/* <Pagination
+
+                    </div> */}
+
+                {/* ---------------------FILTRO POR CREADO------------ */}
+
+                <div>
+                    <h5 className={style.FilterCreated}>Filter by Created</h5>
+                    <select className="selectshome" onChange={e => filterByCreated(e)}>
+                        <option key='all' value='all'>All</option>
+                        <option key='db' value='db'>Created</option>
+                        <option key='api' value='api'>Api Pokemons</option>
+                    </select>
+                </div>
+                {/* --------------------PAGINADO----------------- */}
+                <div>
+                    <div className="divpag">
+                        {/* <Pagination
                         currentPage={currentPage}
                         totalPages={totalPages}
                     /> */}
-                </div>
-                {/* ---------TERNARIO : LOADING VS CardContainer----------- */}
-                <div className='pokemons-home'>
+                    </div>
+                    {/* ---------TERNARIO : LOADING VS CardContainer----------- */}
+                    <div className='pokemons-home'>
 
-                    <Loading />
-                    <CardContainer />
+                        <Loading />
+                        <CardContainer />
 
+                    </div>
                 </div>
             </div>
+
         </div>
-    )
+    );
+
 };
 export default Home;
-

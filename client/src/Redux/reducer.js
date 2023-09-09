@@ -4,7 +4,9 @@ import {
     SET_CURRENT_PAGE,
     SET_TOTAL_PAGES,
     ORDER_POKEMONS_BY_NAME,
-    ORDER_POKEMONS_BY_ATTACK
+    // ORDER_POKEMONS_BY_ATTACK,
+    GET_POKEMONS_CREATED,
+    GET_POKEMONS_API
 } from "./actions";
 
 const initialState = {
@@ -18,6 +20,19 @@ const rootReducer = (state = initialState, action) => {
     switch (action.type) {
 
         case GET_POKEMONS:
+            return {
+                ...state,
+                pokemonsRender: action.payload
+            };
+
+        case GET_POKEMONS_CREATED:
+            return {
+                ...state,
+                pokemonsRender: action.payload
+            };
+
+        case GET_POKEMONS_API:
+
             return {
                 ...state,
                 pokemonsRender: action.payload
@@ -44,22 +59,34 @@ const rootReducer = (state = initialState, action) => {
                 ...state,
                 pokemonsRender: clonedRender
             };
-        case ORDER_POKEMONS_BY_ATTACK:
-            clonedRender.sort(function (a, b) {
-                const attackA = a.attack;
-                const attackB = b.attack;
-                if (action.payload === "best") {
-                    return attackA.localeCompare(attackB);
-                } else {
-                    return attackB.localeCompare(attackA);
-                }
-            });
+        // case ORDER_POKEMONS_BY_ATTACK:
+        //     const clonedRenderAttack = [...state.pokemonsRender];
+        //     const isBest = action.payload === "best";
 
-            return {
-                ...state,
-                pokemonsRender: clonedRender
+        //     clonedRenderAttack.sort(function (a, b) {
+        //         const attackA = parseInt(a.attack);
+        //         const attackB = parseInt(b.attack);
+        //         if (isBest) {
+        //             return attackB - attackA; // Ordenar de mayor a menor ataque (best)
+        //         } else {
+        //             return attackA - attackB; // Ordenar de menor a mayor ataque (worst)
+        //         }
+        //     });
 
-            }
+        //     return {
+        //         ...state,
+        //         pokemonsRender: clonedRenderattack
+
+        //     }
+
+
+
+
+
+
+
+
+
 
 
 

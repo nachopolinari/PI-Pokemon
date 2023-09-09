@@ -6,9 +6,11 @@ export const GET_POKEMON_BY_ID = "GET_POKEMON_BY_ID";
 export const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
 export const SET_TOTAL_PAGES = "SET_TOTAL_PAGES";
 export const ORDER_POKEMONS_BY_NAME = 'ORDER_POKEMONS_BY_NAME';
-export const ORDER_POKEMONS_BY_ATTACK='ORDER_POKEMONS_BY_ATTACK';
+export const ORDER_POKEMONS_BY_ATTACK = 'ORDER_POKEMONS_BY_ATTACK';
+export const GET_POKEMONS_CREATED = "GET_POKEMONS_CREATED";
+export const GET_POKEMONS_API = "GET_POKEMONS_API"
 
-export const getPokemons = (page) => {
+export const getPokemons = () => {
     return async function (dispatch) {
         const apiData = await axios.get("http://localhost:3001/pokemons");
         const pokemons = apiData.data;
@@ -38,23 +40,42 @@ export const getPokemonID = (query) => {
 
 
 export const orderByName = (value) => {
+
     return ({
         type: ORDER_POKEMONS_BY_NAME,
-        payload:value
+        payload: value
     });
 };
 
-export const orderByAttack=(value)=>{
-return({
-    type: ORDER_POKEMONS_BY_ATTACK,
-    payload:value
-})
+
+export const orderAttack = (value) => {
+    return ({
+        type: ORDER_POKEMONS_BY_ATTACK,
+        payload: value
+    });
 };
 
+export function getPokemonCreated() {
 
+    return async function (dispatch) {
+        const apiData = await axios.get("http://localhost:3001/pokemons");
+        const pokemons = apiData.data;
+        const pokemonCreated = pokemons.filter(pokemon => pokemon.created === true);
 
+        dispatch({ type: GET_POKEMONS_CREATED, payload: pokemonCreated });
+    };
 
+};
 
+export function getApiPokemon() {
+    return async function (dispatch) {
+        const apiData = await axios.get("http://localhost:3001/pokemons");
+        const pokemons = apiData.data;
+        const pokemonNoCreated = pokemons.filter(pokemon => pokemon.created === false);
+
+        dispatch({ type: GET_POKEMONS_CREATED, payload: pokemonNoCreated });
+    };
+};
 
 
 
