@@ -4,9 +4,9 @@ import {
     SET_CURRENT_PAGE,
     SET_TOTAL_PAGES,
     ORDER_POKEMONS_BY_NAME,
-    // ORDER_POKEMONS_BY_ATTACK,
+    ORDER_POKEMONS_BY_ATTACK,
     GET_POKEMONS_CREATED,
-    GET_POKEMONS_API
+    GET_POKEMONS_NO_CREATED
 } from "./actions";
 
 const initialState = {
@@ -24,26 +24,12 @@ const rootReducer = (state = initialState, action) => {
                 ...state,
                 pokemonsRender: action.payload
             };
-
-        case GET_POKEMONS_CREATED:
-            return {
-                ...state,
-                pokemonsRender: action.payload
-            };
-
-        case GET_POKEMONS_API:
-
-            return {
-                ...state,
-                pokemonsRender: action.payload
-            };
         case GET_POKEMON_BY_ID:
             return {
                 ...state,
                 pokemonsRender: [...action.payload, ...state.pokemonsRender]
             }
         case ORDER_POKEMONS_BY_NAME:
-
             const clonedRender = [...state.pokemonsRender];
             clonedRender.sort(function (a, b) {
                 const nameA = a.name.toLowerCase();
@@ -54,46 +40,44 @@ const rootReducer = (state = initialState, action) => {
                     return nameB.localeCompare(nameA);
                 }
             });
-
             return {
                 ...state,
                 pokemonsRender: clonedRender
             };
-        // case ORDER_POKEMONS_BY_ATTACK:
-        //     const clonedRenderAttack = [...state.pokemonsRender];
-        //     const isBest = action.payload === "best";
 
-        //     clonedRenderAttack.sort(function (a, b) {
-        //         const attackA = parseInt(a.attack);
-        //         const attackB = parseInt(b.attack);
-        //         if (isBest) {
-        //             return attackB - attackA; // Ordenar de mayor a menor ataque (best)
-        //         } else {
-        //             return attackA - attackB; // Ordenar de menor a mayor ataque (worst)
-        //         }
-        //     });
+        case ORDER_POKEMONS_BY_ATTACK:
+            const clonedRenderAttack = [...state.pokemonsRender];
+            const isBest = action.payload === "best";
 
-        //     return {
-        //         ...state,
-        //         pokemonsRender: clonedRenderattack
+            const ArrayRenderedAttack = clonedRenderAttack.sort(function (a, b) {
+                const attackA = parseInt(a.attack);
+                const attackB = parseInt(b.attack);
+                if (isBest) {
+                    return attackB - attackA; // Ordenar de mayor a menor ataque (best)
+                } else {
+                    return attackA - attackB; // Ordenar de menor a mayor ataque (worst)
+                }
+            });
 
-        //     }
+            return {
+                ...state,
+                pokemonsRender: ArrayRenderedAttack
 
-
-
+            }
 
 
+        case GET_POKEMONS_CREATED:
+            return {
+                ...state,
+                pokemonsRender: action.payload
+            };
 
+        case GET_POKEMONS_NO_CREATED:
 
-
-
-
-
-
-
-
-
-
+            return {
+                ...state,
+                pokemonsRender: action.payload
+            };
 
         case SET_CURRENT_PAGE:
             return {

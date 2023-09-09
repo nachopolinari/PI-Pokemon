@@ -8,7 +8,7 @@ export const SET_TOTAL_PAGES = "SET_TOTAL_PAGES";
 export const ORDER_POKEMONS_BY_NAME = 'ORDER_POKEMONS_BY_NAME';
 export const ORDER_POKEMONS_BY_ATTACK = 'ORDER_POKEMONS_BY_ATTACK';
 export const GET_POKEMONS_CREATED = "GET_POKEMONS_CREATED";
-export const GET_POKEMONS_API = "GET_POKEMONS_API"
+export const GET_POKEMONS_NO_CREATED = "GET_POKEMONS_NO_CREATED"
 
 export const getPokemons = () => {
     return async function (dispatch) {
@@ -67,13 +67,13 @@ export function getPokemonCreated() {
 
 };
 
-export function getApiPokemon() {
+export function getPokemonNoCreated() {
     return async function (dispatch) {
         const apiData = await axios.get("http://localhost:3001/pokemons");
         const pokemons = apiData.data;
         const pokemonNoCreated = pokemons.filter(pokemon => pokemon.created === false);
 
-        dispatch({ type: GET_POKEMONS_CREATED, payload: pokemonNoCreated });
+        dispatch({ type: GET_POKEMONS_NO_CREATED, payload: pokemonNoCreated });
     };
 };
 

@@ -7,7 +7,6 @@ const Detail = () => {
     const { id } = useParams();
     const pokemonsRender = useSelector(state => state.pokemonsRender);
     const pokemon = pokemonsRender.find(poke => poke.id === Number(id));
-
     return (
         <div>
             <Link to="/home"><button>Back</button></Link>
@@ -31,7 +30,6 @@ const Detail = () => {
                 <p>Pokémon no encontrado</p>
             )}
         </div>
-
     )
 };
 export default Detail;
