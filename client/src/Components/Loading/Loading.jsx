@@ -1,10 +1,12 @@
-const Loading=()=>{
+const Loading = () => {
 
 
 
-    return(
+    return (
         <div>
-            Loading...
+            <h1>
+                Loading...
+            </h1>
         </div>
     )
 };

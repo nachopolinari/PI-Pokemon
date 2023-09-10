@@ -1,11 +1,70 @@
 .homeContainer {
 
-  background-color: rgb(255,0,0);
-    /* background-repeat: no-repeat; */
+  background: rgb(246, 247, 12);
+  background: linear-gradient(0deg, rgba(246, 247, 12, 1) 0%, rgba(241, 109, 1, 1) 100%, rgba(241, 109, 1, 1) 100%);
+  /* background-repeat: no-repeat; */
+  /* background-image: url(../../Assets/CuatroElementos.jpg); */
+  background-position: auto;
+  background-size: contain;
+  background-repeat: initial;
 
-    background-position:auto;
-    background-size:cover;
-    background-repeat:no-repeat;
+  /* padding: 40px; */
+}
 
-    /* padding: 40px; */
+.sortsContainer {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  grid-column-gap: 50px;
+  grid-row-gap: 20px;
+}
+
+
+.sortfilter {
+  box-shadow: inset 0px 5px 0px -4px #ffffff;
+  background: linear-gradient(to bottom, #ffffff 5%, #f6f6f6 100%);
+  background-color: #ffffff;
+  border-radius: 42px 0 0 42px;
+  border: 2px solid black;
+  display: inline-block;
+  /* cursor: pointer; */
+  color: #030003;
+  font-family: Courier New;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 5px 60px;
+  text-decoration: none;
+  text-shadow: 0px -2px 0px #ffffff;
+}
+.select{
+  box-shadow: inset 0px 5px 0px -4px #ffffff;
+  background: linear-gradient(to bottom, #ffffff 5%, #f6f6f6 100%);
+  background-color: #ffffff;
+  border-radius: 0 42px 42px 0;
+  border: 2px solid black;
+  display: inline-block;
+  cursor: pointer;
+  color: #030003;
+  font-family: Courier New;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 5px 60px;
+  text-decoration: none;
+  text-shadow: 0px -2px 0px #ffffff;
+}
+.option{
+  box-shadow: inset 0px 5px 0px -4px #ffffff;
+  background: linear-gradient(to bottom, #ffffff 5%, #f6f6f6 100%);
+  background-color: #ffffff;
+  border-radius: 0 42px 42px 0;
+  border: 2px solid black;
+  display: inline-block;
+  cursor: pointer;
+  color: #030003;
+  font-family: Courier New;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 5px 60px;
+  text-decoration: none;
+  text-shadow: 0px -2px 0px #ffffff;
 }

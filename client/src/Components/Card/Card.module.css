@@ -1,12 +1,26 @@
 .card {
-    width: calc(22% - 20px);
+    /* width: calc(22% - 20px);
     /* Calcula el ancho de las columnas (33.33% con espacio entre ellas) */
-    border: 1px solid #ccc;
+    /* border: 1px solid #ccc;
     padding: 1px;
     box-shadow: 3px 0px 15px 10px rgba(96, 92, 92, 0.1);
-    background-color: #fff;
-    border-radius: 30px;
+    background-color: #918c8c41;
+    border-radius: 30px; */ 
+    position: relative;
+    border-radius: 18px;
+    /* background-image: url(./../../utils/cards.jpg); */
+    background-size: cover;
+    background-position: center;
+    font-family: 'pokemon';
+    transition: 0.5s ease;
+    cursor: pointer;
+    margin:30px;
+    width: 300px;
 
+    border-style: solid;
+    border-width: 5px;
+    border-color: rgb(33, 78, 202);
+    background-color: rgba(246, 230, 1, 0.62);
 
 }
 
@@ -24,3 +38,8 @@
     font-size: 14px;
     text-align: center;
 }
+.card:hover {
+    transform: scale(1.05);
+    margin: 5px 5px;
+    box-shadow: 5px 5px 15px rgba(0,0,0,0.6);
+  }

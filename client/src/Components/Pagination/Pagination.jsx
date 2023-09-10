@@ -1,28 +1,37 @@
-import { useDispatch } from "react-redux";
-import { setCurrentPage } from "../../Redux/actions"; // Asegúrate de tener esta acción definida
+import { useState } from 'react';
 
-const Pagination = ({ currentPage, totalPages }) => {
-    const dispatch = useDispatch();
+function usePagination(data, itemsPerPage) {
+  const [currentPage, setCurrentPage] = useState(1);
 
-    function nextPage() {
-        if (currentPage < totalPages) {
-            dispatch(setCurrentPage(currentPage + 1));
-        }
+  const totalPages = Math.ceil(data.length / itemsPerPage);
+
+  const currentData = data.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
+  const goToPage = (page) => {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
     }
+  };
 
-    function prevPage() {
-        if (currentPage > 1) {
-            dispatch(setCurrentPage(currentPage - 1));
-        }
-    }
+  const nextPage = () => {
+    goToPage(currentPage + 1);
+  };
 
-    return (
-        <div>
-            <button onClick={prevPage}>Previous</button>
-            <span>{currentPage} of {totalPages}</span>
-            <button onClick={nextPage}>Next</button>
-        </div>
-    )
-};
+  const prevPage = () => {
+    goToPage(currentPage - 1);
+  };
 
-export default Pagination;
+  return {
+    currentPage,
+    totalPages,
+    currentData,
+    goToPage,
+    nextPage,
+    prevPage,
+  };
+}
+
+export default usePagination;

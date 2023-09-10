@@ -19,13 +19,13 @@ const SearchBar = ({ onSearch }) => {
 
     return (
         <div className={style.SearchBar}>
-            <input
+            <input className={style.input}
                 type='search'
                 value={searchValue}
                 onChange={handleInputChange}
-                placeholder= 'Pokemon´s Name or ID'
+                placeholder= ' Name or ID'
             />
-            <select onChange={handleSearchTypeChange} value={searchType}>
+            <select className={style.select} onChange={handleSearchTypeChange} value={searchType}>
                 <option value="name">Nombre</option>
                 <option value="id">ID</option>
             </select>

@@ -14,9 +14,13 @@ const NavBar = () => {
 
     return (
         <div className={style.navBarContainer}>
-            <Link to="/home">Voy a Home</Link>
-            <Link to="/form">Voy a Form</Link>
-            <SearchBar onSearch={onSearch} />
+            <div className={style.navBarDiv}>
+                <Link to="/home">Voy a Home</Link>
+                <Link to="/form">Voy a Form</Link>
+            </div>
+            <div className={style.navBarDiv}>>
+                <SearchBar onSearch={onSearch} />
+            </div>
         </div>
     );
 };
