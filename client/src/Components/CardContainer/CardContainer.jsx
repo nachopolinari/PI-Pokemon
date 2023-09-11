@@ -18,34 +18,36 @@ const CardContainer = () => {
         prevPage,
     } = usePagination(pokemonsRender, itemsPerPage);
 
-    return (
-        <div>
-            {/* ------------------------PAGINADO-------------- */}
-            <div className={style.cardsContainer}>
-                {/* <div>
-                    <button onClick={() => prevPage()} disabled={currentPage === 1}>Prev</button>
-                    <span> {currentPage} / {totalPages}</span>
-                    <button onClick={() => nextPage()} disabled={currentPage === totalPages}>Next</button>
-                </div>
-                <br /> */}
-                {/* ------------------MAPEO --------------- */}
-                {currentData.map(pokemon => {
-                    return <Card
-                        key={pokemon.id}
-                        id={pokemon.id}
-                        name={pokemon.name.toUpperCase()}
-                        img={pokemon.img}
-                        types={pokemon.types}
-                    />
-                })}
-                {/* -----------------PAGINADO------------ */}
-                {/* <div>
-                    <button onClick={() => prevPage()} disabled={currentPage === 1}>Prev</button>
-                    <span> {currentPage} / {totalPages}</span>
-                    <button onClick={() => nextPage()} disabled={currentPage === totalPages}>Next</button>
-                </div> */}
-            </div>
+    return (<>
+
+        {/* ------------------------PAGINADO-------------- */}
+
+        <div className={style.pagination}>
+            <button onClick={() => prevPage()} disabled={currentPage === 1} className={style.paginationButton}>Prev</button>
+            <span> {currentPage} / {totalPages}</span>
+            <button onClick={() => nextPage()} disabled={currentPage === totalPages} className={style.paginationButton}>Next</button>
         </div>
+        <div className={style.cardsContainer}>
+
+            {/* ------------------MAPEO --------------- */}
+            {currentData.map(pokemon => {
+                return <Card
+                    key={pokemon.id}
+                    id={pokemon.id}
+                    name={pokemon.name.toUpperCase()}
+                    img={pokemon.img}
+                    types={pokemon.types}
+                />
+            })}
+        </div>
+        {/* -----------------PAGINADO------------ */}
+
+        <div className={style.pagination}>
+            <button onClick={() => prevPage()} disabled={currentPage === 1} className={style.paginationButton}>Prev</button>
+            <span> {currentPage} / {totalPages}</span>
+            <button onClick={() => nextPage()} disabled={currentPage === totalPages} className={style.paginationButton}>Next</button>
+        </div>
+    </>
     )
 };
 export default CardContainer;

@@ -20,26 +20,33 @@
     border-style: solid;
     border-width: 5px;
     border-color: rgb(33, 78, 202);
-    background-color: rgba(246, 230, 1, 0.62);
+    background-color: rgba(246, 230, 1, 0.591);
+    box-shadow: 5px 5px 5px 5px rgba(0,0,0,0.6);
 
 }
 
 .card img {
     max-width: 75%;
     height: auto;
+    
 }
 
 .card h3 {
     font-size: 18px;
     text-align: center;
+    
 }
 
 .card p {
-    font-size: 14px;
+    font-size: 16px;
     text-align: center;
+    font-weight: bold;
+
+    
 }
 .card:hover {
     transform: scale(1.05);
     margin: 5px 5px;
-    box-shadow: 5px 5px 15px rgba(0,0,0,0.6);
+    box-shadow: 20px 20px 20px 20px rgba(0,0,0,0.6);
   }
+  .linkCard{text-decoration: none;}

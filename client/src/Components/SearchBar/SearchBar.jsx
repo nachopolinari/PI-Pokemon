@@ -3,18 +3,18 @@ import { useState } from 'react';
 
 const SearchBar = ({ onSearch }) => {
     const [searchValue, setSearchValue] = useState('');
-    const [searchType, setSearchType] = useState('name'); // Por defecto, buscar por nombre
+    // const [searchType, setSearchType] = useState('name'); // Por defecto, buscar por nombre
 
-    const handleSearchTypeChange = (event) => {
-        setSearchType(event.target.value);
-    };
+    // const handleSearchTypeChange = (event) => {
+    //     setSearchType(event.target.value);
+    // };
 
     const handleInputChange = (event) => {
         setSearchValue(event.target.value);
     };
 
     const handleSearch = () => {
-        onSearch(searchValue, searchType);
+        onSearch(searchValue, /*searchType*/);
     };
 
     return (
@@ -25,10 +25,10 @@ const SearchBar = ({ onSearch }) => {
                 onChange={handleInputChange}
                 placeholder= ' Name or ID'
             />
-            <select className={style.select} onChange={handleSearchTypeChange} value={searchType}>
+            {/* <select className={style.select} onChange={handleSearchTypeChange} value={searchType}>
                 <option value="name">Nombre</option>
                 <option value="id">ID</option>
-            </select>
+            </select> */}
             
             
             <button onClick={handleSearch}>Buscar</button>
@@ -38,24 +38,3 @@ const SearchBar = ({ onSearch }) => {
 };
 
 export default SearchBar;
-
-// import style from './SearchBar.module.css';
-// import { useState } from 'react';
-
-// const SearchBar = () => {
-
-//     const [id, setId] = useState('');
-
-//     const handleChange = (event) => {
-//         setId(event.target.value)
-//     };
-
-
-//     return (
-//         <div className={style.SearchBar}>
-//             <input type='search' onChange={handleChange} value={id} />
-//             <button onClick={() => { onSearch(id) }}>Buscar</button>
-//         </div>
-//     )
-// };
-// export default SearchBar;

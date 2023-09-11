@@ -1,11 +1,33 @@
 .cardsContainer {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content:space-around;
-    gap: 20px;
-    padding: 20px;
-    max-width: 1200px; /* Ajusta el ancho máximo según tus necesidades */
-    margin: 0 auto;
-    
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 20px;
+  padding: 20px;
+  max-width: 1200px;
+  /* Ajusta el ancho máximo según tus necesidades */
+  margin: 0 auto;
 
-  }
+
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+}
+.paginationButton{
+  
+  width: auto;
+  height: auto;
+  border: 6px double #000000;
+  border-radius: 25px;  
+  font-style: bolt;
+  margin-left:2px;
+  margin-right: 2px;
+
+}
+.paginationButton:hover{
+  box-shadow: 0 0 5px 0  #ffe600 inset, 0 0 5px 4px #ffe600;
+  color: rgb(255, 255, 255);
+  outline: 0;
+}

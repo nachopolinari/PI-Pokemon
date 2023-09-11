@@ -1,0 +1,58 @@
+.formContainer {
+    display: flex;
+    flex-direction: column;
+    /* Alinear elementos verticalmente */
+    justify-content: center;
+    /* Centrar verticalmente */
+    align-items: center;
+    /* Centrar horizontalmente */
+    gap: 20px;
+    padding: 20px;
+    max-width: 100%;
+    margin: 10 auto;
+    min-height: 100vh;
+    /* Opcional: asegura que el contenedor ocupe toda la altura de la pantalla */
+    background: rgb(246, 247, 12);
+    background: linear-gradient(0deg, rgba(246, 247, 12, 1) 0%, rgba(241, 109, 1, 1) 100%, rgba(241, 109, 1, 1) 100%);
+    /* background-repeat: no-repeat; */
+}
+
+.inputContainer {
+    border-radius: 18px;
+    /* background-image: url(./../../utils/cards.jpg); */
+    background-size: cover;
+    background-position: center;
+    font-family: 'pokemon';
+    transition: 0.5s ease;
+    width: 700px;
+    box-shadow: 5px 5px 5px 5px rgba(0,0,0,0.6);
+
+    border-style: solid;
+    border-width: 5px;
+    border-color: rgb(33, 78, 202);
+    background-color: rgba(246, 230, 1, 0.62);
+    display: grid;
+    /* grid-template-columns: 1fr;
+    grid-template-rows: repeat(8, 1fr);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px; */
+}
+
+.inputContainer label {
+    font-weight: bold;
+    margin-left: 5px;
+    
+}
+
+.inputContainer input {
+    margin-top: 3px;
+    
+    width: auto;
+    height: 100%;
+    border: 3px solid #000000;
+    border-radius: 25px;
+}
+
+.inputContainer span {
+    font-style: italic;
+}

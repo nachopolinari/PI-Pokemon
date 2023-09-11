@@ -1,6 +1,13 @@
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { postPokemon } from "../../Redux/actions";
+import style from "./Form.module.css"
 
 const Form = () => {
+
+    const dispatch = useDispatch()
+    const types = useSelector((state) => state.types);
+    console.log("types en form:", types);
 
     const [form, setForm] = useState({
         name: "",
@@ -11,7 +18,7 @@ const Form = () => {
         speed: "",
         height: "",
         weight: "",
-        type: ""
+        selectedTypes: [],
     })
     const [errors, setErrors] = useState({
         name: "",
@@ -22,8 +29,26 @@ const Form = () => {
         speed: "",
         height: "",
         weight: "",
-        type: ""
+        types: []
     })
+
+    // Esta función maneja el clic en un tipo de Pokémon
+    const handleTypeClick = (typeName) => {
+        // Verifica si el tipo ya está seleccionado
+        if (form.selectedTypes.includes(typeName)) {
+            // Si ya está seleccionado, lo eliminamos de la lista de tipos seleccionados
+            setForm({
+                ...form,
+                selectedTypes: form.selectedTypes.filter((type) => type !== typeName),
+            });
+        } else {
+            // Si no está seleccionado, lo agregamos a la lista de tipos seleccionados
+            setForm({
+                ...form,
+                selectedTypes: [...form.selectedTypes, typeName],
+            });
+        }
+    };
 
     const changeHandler = (event) => {
         const property = event.target.name;
@@ -42,7 +67,7 @@ const Form = () => {
             speed: '',
             height: '',
             weight: '',
-            type: ''
+            type: []
         };
         //------valida name-----------
         if (!/^.{3,10}$/.test(form.name)) {
@@ -98,77 +123,138 @@ const Form = () => {
         setErrors(newErrors);
     };
 
-    const sumbitHandler = (event) => {
-        event.preventDefault()
+    // const sumbitHandler = (event) => {
+    //     event.preventDefault()
+    // };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        const hasErrors = Object.values(errors).some(error => error);
+        const hasMissingFields = Object.values(form).some(field => !field);
+        const hasSelectedTypes = form.types.length >= 2;
+
+        if (!hasErrors && !hasMissingFields && hasSelectedTypes) {
+            dispatch(postPokemon(form));
+            //QUITAR ESTE ALERT!! 
+            alert("Successfully added!");
+            //reinicia el form
+            setForm({
+                name: "",
+                img: "",
+                life: "",
+                attack: "",
+                defense: "",
+                speed: "",
+                height: "",
+                weight: "",
+                types: []
+            });
+        } else {
+            //QUITAR ESTE ALERT!! 
+            alert("Incorrect data, please try again!");
+        }
+    };
+
+
+    const handleSelect = (e) => {
+        setForm({
+            ...form,
+            types: [...form.types, e.target.value]
+        })
+    }
+
+
+    const handleDelete = (e) => {
+        setForm({
+            ...form,
+            types: form.types.filter(t => t !== e)
+        })
+    }
+
+    const handleReset = (e) => {
+        e.preventDefault();
+        setForm({
+            name: "",
+            img: "",
+            life: "",
+            attack: "",
+            defense: "",
+            speed: "",
+            height: "",
+            weight: "",
+            types: []
+        });
+        setErrors({});
     };
 
     return (
-        <form onSubmit={sumbitHandler}>
-            <h1>Crea tu propio Pokemon!!</h1>
-            <div>
-                <label htmlFor="">Name: </label>
-                <input type="text" name="name" value={form.name} onChange={changeHandler} placeholder=''/>
-                <span>{errors.name}</span>
+        <form onSubmit={handleSubmit} className={style.formContainer}>
+            <h1>Create your own Pokemon!!</h1>
+            <div className={style.inputContainer}>
+                <div className={style.inputs}>
+                    <label htmlFor="">Name: </label>
+                    <input type="text" name="name" value={form.name} onChange={changeHandler} placeholder='' />
+                    <span>{errors.name}</span>
+                </div>
+                <br /> {/*Cambiar esto por CSS */}
+                <div>
+                    <label htmlFor="">Image: </label>
+                    <input type="text" name="img" value={form.img} onChange={changeHandler} placeholder='https://pokemon-image.com' />
+                    <span>{errors.img}</span>
+                </div>
+                <br /> {/*Cambiar esto por CSS */}
+                <div>
+                    <label htmlFor="">Life  :  </label>
+                    <input type="text" name="life" value={form.life} onChange={changeHandler} placeholder='1-250' />
+                    <span>{errors.life}</span>
+                </div>
+                <br /> {/*Cambiar esto por CSS */}
+                <div>
+                    <label htmlFor="">Attack: </label>
+                    <input type="text" name="attack" value={form.attack} onChange={changeHandler} placeholder='10-190' />
+                    <span>{errors.attack}</span>
+                </div>
+                <br /> {/*Cambiar esto por CSS */}
+                <div>
+                    <label htmlFor="">Defense: </label>
+                    <input type="text" name="defense" value={form.defense} onChange={changeHandler} placeholder='10-190' />
+                    <span>{errors.defense}</span>
+                </div>
+                <br /> {/*Cambiar esto por CSS */}
+                <div>
+                    <label htmlFor="">Speed: </label>
+                    <input type="text" name="speed" value={form.speed} onChange={changeHandler} placeholder='10-190' />
+                    <span>{errors.speed}</span>
+                </div>
+                <br /> {/*Cambiar esto por CSS */}
+                <div>
+                    <label htmlFor="">Height: </label>
+                    <input type="text" name="height" value={form.height} onChange={changeHandler} placeholder='10-190' />
+                    <span>{errors.height}</span>
+                </div>
+                <br /> {/*Cambiar esto por CSS */}
+                <div>
+                    <label htmlFor="">Weight: </label>
+                    <input type="text" name="weight" value={form.weight} onChange={changeHandler} placeholder='100-1000' />
+                    <span>{errors.weight}</span>
+                </div>
+                <br /> {/*Cambiar esto por CSS */}
             </div>
-            <br /> {/*Cambiar esto por CSS */}
-            <div>
-                <label htmlFor="">Image: </label>
-                <input type="text" name="img" value={form.img} onChange={changeHandler} placeholder='https://pokemon-image.com'/>
-                <span>{errors.img}</span>
-            </div>
-            <br /> {/*Cambiar esto por CSS */}
-            <div>
-                <label htmlFor="">Life: </label>
-                <input type="text" name="life" value={form.life} onChange={changeHandler} placeholder='1-250'/>
-                <span>{errors.life}</span>
-            </div>
-            <br /> {/*Cambiar esto por CSS */}
-            <div>
-                <label htmlFor="">Attack: </label>
-                <input type="text" name="attack" value={form.attack} onChange={changeHandler} placeholder='10-190'/>
-                <span>{errors.attack}</span>
-            </div>
-            <br /> {/*Cambiar esto por CSS */}
-            <div>
-                <label htmlFor="">Defense: </label>
-                <input type="text" name="defense" value={form.defense} onChange={changeHandler} placeholder='10-190'/>
-                <span>{errors.defense}</span>
-            </div>
-            <br /> {/*Cambiar esto por CSS */}
-            <div>
-                <label htmlFor="">Speed: </label>
-                <input type="text" name="speed" value={form.speed} onChange={changeHandler} placeholder='10-190'/>
-                <span>{errors.speed}</span>
-            </div>
-            <br /> {/*Cambiar esto por CSS */}
-            <div>
-                <label htmlFor="">Height: </label>
-                <input type="text" name="height" value={form.height} onChange={changeHandler} placeholder='10-190'/>
-                <span>{errors.height}</span>
-            </div>
-            <br /> {/*Cambiar esto por CSS */}
-            <div>
-                <label htmlFor="">Weight: </label>
-                <input type="text" name="weight" value={form.weight} onChange={changeHandler} placeholder='100-1000'/>
-                <span>{errors.weight}</span>
-            </div>
-            <br /> {/*Cambiar esto por CSS */}
             <h4>Elige al menos dos tipos de Pokémon:</h4>
             <div>
-                <label><input type="checkbox" name="pokemonType" value="Fuego" /> Fuego</label>
-                <br />
-                <label><input type="checkbox" name="pokemonType" value="Agua" /> Agua</label>
-                <br />
-                <label><input type="checkbox" name="pokemonType" value="Planta" /> Planta</label>
-                <br />
-                <label><input type="checkbox" name="pokemonType" value="Eléctrico" /> Eléctrico</label>
-                <br />
+                {/* Renderiza botones para cada tipo de Pokémon */}
+                {types.map((t) => (
+                    <button
+                        key={t.id}
+                        className={`type-button ${form.selectedTypes.includes(t.name) ? "selected" : ""}`}
+                        onClick={() => handleTypeClick(t.name)}
+                    >
+                        {t.name}
+                    </button>
+                ))}
             </div>
-            <div>
-                <input type="reset" />
-                <input type="submit" value='Enviar' />
-            </div>
-        </form>
+        </form >
     )
 };
 export default Form;

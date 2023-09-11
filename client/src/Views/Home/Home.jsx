@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import CardContainer from "../../Components/CardContainer/CardContainer";
-import { useDispatch } from "react-redux";
-import { getPokemons, orderByName, getPokemonCreated, getPokemonNoCreated, orderAttack } from '../../Redux/actions'
+import { useDispatch , useSelector} from "react-redux";
+import { getPokemons, orderByName, getPokemonCreated, getPokemonNoCreated, orderAttack,getTypes } from '../../Redux/actions'
 import style from './Home.module.css'
 import Loading from "../../Components/Loading/Loading";
 
 const Home = () => {
-
+    const types = useSelector((state) => state.types);
     const [loading, setLoading] = useState(true);
     const dispatch = useDispatch();
     // const currentPage = useSelector(state => state.currentPage);
@@ -14,13 +14,15 @@ const Home = () => {
     // const [order,setorder] = useState ("");
 
     useEffect(() => {
-        dispatch(getPokemons())
+        dispatch(getPokemons(),getTypes())
+        
             .then(() => setLoading(false))
-            .catch(error => {
+            .catch(error => {//SACAR ESTE CONSOLE.LOG Y MANEJAR ERROR
                 console.error(error);
                 setLoading(false);
             });
     }, [dispatch]);
+    console.log("types en HOME:", types);
 
     //----------ORDEN POR NOMBRE------------
     function orderforName(event) {

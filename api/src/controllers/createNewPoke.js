@@ -11,6 +11,7 @@ const createNewPoke = async (name, img, life, attack, defense, speed, height, we
             speed,
             height,
             weight,
+            
         });
 
         // Asociar los tipos al Pokémon creado
@@ -24,7 +25,7 @@ const createNewPoke = async (name, img, life, attack, defense, speed, height, we
 
         return newPoke;
     } catch (error) {
-        throw new Error('Error creating the Pokémon: ' + error.message);
+        throw new Error('Error creating the Pokémon');
     }
 };
 

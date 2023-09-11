@@ -1,18 +1,19 @@
 import {
     GET_POKEMONS,
     GET_POKEMON_BY_ID,
-    SET_CURRENT_PAGE,
-    SET_TOTAL_PAGES,
     ORDER_POKEMONS_BY_NAME,
     ORDER_POKEMONS_BY_ATTACK,
     GET_POKEMONS_CREATED,
-    GET_POKEMONS_NO_CREATED
+    GET_POKEMONS_NO_CREATED,
+    CREATE_POKEMON_SUCCESS,
+    GET_TYPES
 } from "./actions";
 
 const initialState = {
     pokemonsRender: [],
     currentPage: 1,
     totalPages: 1,
+    types: [],
 };
 
 
@@ -23,6 +24,12 @@ const rootReducer = (state = initialState, action) => {
             return {
                 ...state,
                 pokemonsRender: action.payload
+            };
+        case GET_TYPES:
+            return {
+                ...state,
+                types: action.payload
+               
             };
         case GET_POKEMON_BY_ID:
             return {
@@ -79,19 +86,13 @@ const rootReducer = (state = initialState, action) => {
                 pokemonsRender: action.payload
             };
 
-        case SET_CURRENT_PAGE:
-            return {
-                ...state,
-                currentPage: action.payload,
-            };
-        case SET_TOTAL_PAGES:
-            return {
-                ...state,
-                totalPages: action.payload,
-            };
+        case CREATE_POKEMON_SUCCESS:
+            return { ...state };
+
 
         default:
             return { ...state };
     }
 };
+console.log("types en reducer:", initialState.types);
 export default rootReducer;
