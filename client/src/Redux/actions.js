@@ -1,52 +1,94 @@
+//📍 Define ACTIONS CREATORS y ACTIONS para obtener todos los pokemons(API+BD), para obtener los tipos de pokemons,para obtener UN pokemon por name o ID, para ordenarlos por nombre o por attaque, para filtrarlos por creacion o por type y para crear un nuevo pokemon.
+
 import axios from 'axios';
 
-
 export const GET_POKEMONS = "GET_POKEMONS";
+export const GET_TYPES = "GET_TYPES";
 export const GET_POKEMON_BY_ID = "GET_POKEMON_BY_ID";
 export const ORDER_POKEMONS_BY_NAME = 'ORDER_POKEMONS_BY_NAME';
 export const ORDER_POKEMONS_BY_ATTACK = 'ORDER_POKEMONS_BY_ATTACK';
 export const GET_POKEMONS_CREATED = "GET_POKEMONS_CREATED";
 export const GET_POKEMONS_NO_CREATED = "GET_POKEMONS_NO_CREATED";
+export const GET_POKEMONS_FOR_TYPE = 'GET_POKEMONS_FOR_TYPE';
 export const CREATE_POKEMON_SUCCESS = 'CREATE_POKEMON_SUCCESS';
-export const GET_TYPES = "GET_TYPES";
+export const CREATE_POKEMON_ERROR = "CREATE_POKEMON_ERROR";
 
 export const getPokemons = () => {
     return async function (dispatch) {
-        const apiData = await axios.get("http://localhost:3001/pokemons");
-        const pokemons = apiData.data;
-        dispatch({ type: GET_POKEMONS, payload: pokemons });
+        try {
+            const apiData = await axios.get("http://localhost:3001/pokemons");
+            const pokemons = apiData.data;
+            dispatch({
+                type: GET_POKEMONS,
+                payload: pokemons
+            });
+        } catch (error) {
+            console.log('Error en action "getPokemons": ', error);
+        }
     };
 };
 export const getTypes = () => {
     return async function (dispatch) {
-        const apiData = await axios.get("http://localhost:3001/pokemonsTypes");
-        console.log("apiData en actions:", apiData);
-        const types = apiData.data;
-        console.log("types en actions:", types);
-        dispatch({ type: GET_TYPES, payload: types });
-    };
-}
-
-export const getPokemonID = (query) => {
-    return async function (dispatch) {
-        let apiData;
-        if (!isNaN(query)) {
-            // Si query es un número, buscar por ID
-            apiData = await axios.get(`http://localhost:3001/pokemons/${query}`);
-        } else {
-            // Si query es una cadena, buscar por nombre
-            apiData = await axios.get(`http://localhost:3001/pokemons?name=${query}`);
+        try {
+            const apiData = await axios.get("http://localhost:3001/pokemonsTypes");
+            const types = apiData.data;
+            dispatch({
+                type: GET_TYPES,
+                payload: types
+            });
+        } catch (error) {
+            console.log('Error en action "getTypes": ', error);
         }
-        let pokemonData = apiData.data;
-
-        if (!Array.isArray(pokemonData)) {
-            // Si no es un array, transformarlo en un array
-            pokemonData = [pokemonData];
-        }
-        dispatch({ type: GET_POKEMON_BY_ID, payload: pokemonData });
     };
 };
 
+export const getPokemonID = (query) => {
+    return async function (dispatch) {
+
+        try {
+            let apiData;
+            if (!isNaN(query)) {
+                // Si query es un número, buscar por ID
+                apiData = await axios.get(`http://localhost:3001/pokemons/${query}`);
+            } else {
+                // Si query es una cadena, buscar por nombre
+                apiData = await axios.get(`http://localhost:3001/pokemons?name=${query}`);
+            }
+            let pokemonData = apiData.data;
+
+            if (!Array.isArray(pokemonData)) {
+                // Si no es un array, transformarlo en un array
+                pokemonData = [pokemonData];
+            }
+            dispatch({
+                type: GET_POKEMON_BY_ID,
+                payload: pokemonData
+            });
+        } catch (error) {
+            console.log('Error en action "getPokemonID": ', error);
+        }
+    };
+};
+
+export const getPokemonForType = (type) => {
+    return async (dispatch) => {
+        try {
+            const pokemons = await axios.get(`http://localhost:3001/pokemonsTypes/${type}`);
+            dispatch({
+                type: GET_POKEMONS_FOR_TYPE,
+                payload: pokemons.data
+            });
+        }
+        catch (err) {
+            console.log('Error en action "getPokemonForType": No hay pokemons con este type');
+            //NIY: implementar cartel con msj para usuario
+            return dispatch({
+                type: GET_POKEMONS_FOR_TYPE,
+                payload: []
+            });
+        }
+    };
+};
 
 export const orderByName = (value) => {
 
@@ -55,7 +97,6 @@ export const orderByName = (value) => {
         payload: value
     });
 };
-
 
 export const orderAttack = (value) => {
     return ({
@@ -67,11 +108,18 @@ export const orderAttack = (value) => {
 export const getPokemonCreated = () => {
 
     return async function (dispatch) {
-        const apiData = await axios.get("http://localhost:3001/pokemons");
-        const pokemons = apiData.data;
-        const pokemonCreated = pokemons.filter(pokemon => pokemon.created === true);
+        try {
+            const apiData = await axios.get("http://localhost:3001/pokemons");
+            const pokemons = apiData.data;
+            const pokemonCreated = pokemons.filter(pokemon => pokemon.created === true);
+            dispatch({
+                type: GET_POKEMONS_CREATED,
+                payload: pokemonCreated
+            });
 
-        dispatch({ type: GET_POKEMONS_CREATED, payload: pokemonCreated });
+        } catch (error) {
+            console.log('Error en action "getPokemonCreated": No hay pokemons creados por el usuario');
+        }
     };
 
 };
@@ -95,15 +143,16 @@ export const postPokemon = (payload) => {
                 payload: json
             });
         }
-        catch (err) {
-            console.log(err);
+        catch (error) {
+            console.log('Error en action "postPokemon": no se ha creado el pokemon');
             dispatch({
-                type: "CREATE_POKEMON_ERROR",
-                payload: err.message // O cualquier otra información de error que quieras proporcionar
+                type: CREATE_POKEMON_ERROR,
+                payload: error.message // O cualquier otra información de error que quieras proporcionar
             });
-            throw err; // Lanzar el error nuevamente para que los componentes puedan manejarlo si es necesario
+            throw error; 
+            //NIY: CREAR ACCION PARA QUE AVISE QUE NO SE POSTEO EL POKE
+            //NIY: Lanzar el error nuevamente para que los componentes puedan manejarlo si es necesario
 
-            //CREAR ACCION PARA QUE AVISE QUE NO SE POSTEO EL POKE
         };
     };
 };

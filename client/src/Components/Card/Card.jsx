@@ -7,6 +7,7 @@ const Card = (props) => {
             <Link to={`/detail/${props.id}`} className={style.linkCard}>
                 <h3>{props.name}</h3>
                 <img className={style.img} src={props.img} alt={props.name} />
+                <p>Attack {props.attack}</p>
                 <p>{props.types}</p>
             </Link>
 

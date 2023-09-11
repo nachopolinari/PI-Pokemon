@@ -23,8 +23,8 @@ const Detail = () => {
                             <p>Attack: {pokemon.attack}</p>
                             <p>Defense: {pokemon.defense}</p>
                             <p>Speed: {pokemon.speed}</p>
-                            <p>Height: {pokemon.height}</p>
-                            <p>Weight: {pokemon.weight}</p>
+                            <p>Height: {pokemon.height} mts.</p>
+                            <p>Weight: {pokemon.weight} kgs</p>
                         </div>
                         <p>Types: {pokemon.types[0]} {pokemon.types[1]}</p>
 

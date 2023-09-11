@@ -36,6 +36,7 @@ const CardContainer = () => {
                     id={pokemon.id}
                     name={pokemon.name.toUpperCase()}
                     img={pokemon.img}
+                    attack={pokemon.attack}
                     types={pokemon.types}
                 />
             })}

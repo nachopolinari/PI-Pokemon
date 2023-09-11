@@ -1,3 +1,4 @@
+//📍 Importa las Actions Creators y segun sea el caso, modifica el estado global del store
 import {
     GET_POKEMONS,
     GET_POKEMON_BY_ID,
@@ -6,13 +7,12 @@ import {
     GET_POKEMONS_CREATED,
     GET_POKEMONS_NO_CREATED,
     CREATE_POKEMON_SUCCESS,
-    GET_TYPES
+    GET_TYPES,
+    GET_POKEMONS_FOR_TYPE
 } from "./actions";
 
 const initialState = {
     pokemonsRender: [],
-    currentPage: 1,
-    totalPages: 1,
     types: [],
 };
 
@@ -29,13 +29,18 @@ const rootReducer = (state = initialState, action) => {
             return {
                 ...state,
                 types: action.payload
-               
+
+            };
+        case GET_POKEMONS_FOR_TYPE:
+            return {
+                ...state,
+                pokemonsRender: action.payload
             };
         case GET_POKEMON_BY_ID:
             return {
                 ...state,
                 pokemonsRender: [...action.payload, ...state.pokemonsRender]
-            }
+            };
         case ORDER_POKEMONS_BY_NAME:
             const clonedRender = [...state.pokemonsRender];
             clonedRender.sort(function (a, b) {
@@ -51,7 +56,6 @@ const rootReducer = (state = initialState, action) => {
                 ...state,
                 pokemonsRender: clonedRender
             };
-
         case ORDER_POKEMONS_BY_ATTACK:
             const clonedRenderAttack = [...state.pokemonsRender];
             const isBest = action.payload === "best";
@@ -65,34 +69,27 @@ const rootReducer = (state = initialState, action) => {
                     return attackA - attackB; // Ordenar de menor a mayor ataque (worst)
                 }
             });
-
             return {
                 ...state,
                 pokemonsRender: ArrayRenderedAttack
-
-            }
-
-
+            };
         case GET_POKEMONS_CREATED:
             return {
                 ...state,
                 pokemonsRender: action.payload
             };
-
         case GET_POKEMONS_NO_CREATED:
-
             return {
                 ...state,
                 pokemonsRender: action.payload
             };
-
         case CREATE_POKEMON_SUCCESS:
-            return { ...state };
-
-
+            return { 
+                ...state 
+                //NIY: completar la creacion de pokemon;
+            };
         default:
             return { ...state };
     }
 };
-console.log("types en reducer:", initialState.types);
 export default rootReducer;

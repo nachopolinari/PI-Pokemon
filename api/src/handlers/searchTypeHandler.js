@@ -1,4 +1,4 @@
-const { searchType } = require('../controllers/searchType')
+const  searchType  = require('../controllers/searchType');
 
 const searchTypeHandler = async (req, res) => {
     const { type } = req.params;

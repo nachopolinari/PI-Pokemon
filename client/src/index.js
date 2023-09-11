@@ -1,3 +1,6 @@
+//📍Entry Point de la APP.
+//configura y renderiza la aplicación React en el DOM , App será el componente pricipal, lo envuelve BrowserRouter para permitir la navegacion entre componentes segun la url, los envuelve Provider para darles acceso al store
+
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
