@@ -1,3 +1,8 @@
+//📍 View principal de mi APP
+//1-trae types del estado global
+//2- crea el estado local loading
+//3- al montarse el componente despacha las actions que cargaran al estado global los pokemons y los types desde la BD y API
+//4- crea las funciones que ordenan/filtran y despachan al reducer
 import { useEffect, useState } from "react";
 import CardContainer from "../../Components/CardContainer/CardContainer";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,9 +14,7 @@ const Home = () => {
     const types = useSelector((state) => state.types);
     const [loading, setLoading] = useState(true);
     const dispatch = useDispatch();
-    // const currentPage = useSelector(state => state.currentPage);
-    // const totalPages = useSelector(state => state.totalPages);
-    // const [order,setorder] = useState ("");
+   
 
     useEffect(() => {
         dispatch(getPokemons(), getTypes())
@@ -33,8 +36,7 @@ const Home = () => {
         else {
 
             dispatch(orderByName(value))
-            // setCurrentPage(p => p = 1)    //ATENTO A ESTO PARA PAGINATION
-            // setOrder(`ordenado ${event.target.value}`) //mensaje que indica cómo se ha ordenado la lista de pokemons
+           
         }
     }
     //---------ORDEN POR ATAQUE----------------
@@ -93,7 +95,7 @@ const Home = () => {
                 </div>
                 {/* -------------------ORDEN POR ATAQUE------------- */}
                 <div>
-                    <h5 className={style.sortfilter}>Sort by Attack</h5>
+                    <h5 className={style.sortfilter}>Sort by Attack</h5>--
                     <select className={style.select} onChange={event => orderByAttack(event)}>
                         <option className={style.option} key='default2' value='default2'>Default</option>
                         <option className={style.option} key='best' value='best'>Best Attack</option>
@@ -140,7 +142,7 @@ const Home = () => {
                     </select>
                 </div>
             </div>
-            {/* --------------------PAGINADO----------------- */}
+           
             <div>
                 {/* ---------TERNARIO : LOADING VS CardContainer----------- */}
                 <div className='pokemons-home'>

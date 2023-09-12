@@ -8,7 +8,6 @@ const getApiPoke = async () => {
     const apiPokeInfo = apiResponse.data.results;// el data es por axios y el results es por la api de Pokemon
     //Consigo las URL de los pokemons
     const apiPokeInfoURL = await Promise.all(apiPokeInfo.map(elem => axios.get(elem.url)));//Al usar Promise.all(), se espera a que todas las promesas generadas por el mapeo de las URLs se resuelvan y se obtiene un array con los resultados una vez que todas las promesas estén completas.
-
     //mapeo final para filtrar la info que no me sirve
     const apiPoke = apiPokeInfoURL.map(elem => {
         return {
@@ -28,4 +27,33 @@ const getApiPoke = async () => {
     return apiPoke;
 };
 
-module.exports =  {getApiPoke};
+module.exports = { getApiPoke };
+
+// ----------------------------///////////////////////////////////////////////////////////////////
+// const getPokemonsApi = async () => {
+//     try {
+//         const api = await axios.get("https://pokeapi.co/api/v2/pokemon/?limit=200")
+
+//         const pokeApi = api.data.results //guardo la informacion en una constante para luego mapearla y modificar segun la info de la url
+//         // console.log(pokeApi);
+//         const dataPokemon = await Promise.all(pokeApi.map(elem => axios.get(elem.url)));
+//         const info = dataPokemon.map(elem => {
+
+//             return {
+//                 id: elem.data.id,
+//                 name: elem.data.name,
+//                 img: elem.data.sprites.other.home.front_default, //revisar que imagen quiero
+//                 life: elem.data.stats[0].base_stat,
+//                 attack: elem.data.stats[1].base_stat,
+//                 defense: elem.data.stats[2].base_stat,
+//                 speed: elem.data.stats[5].base_stat,
+//                 height: elem.data.height,
+//                 weight: elem.data.weight,
+//                 hp: elem.data.stats[0].base_stat,
+//                 types: elem.data.types.map((e) => e.type.name)
+//             };
+//         });
+//         return apiPoke;
+//     };
+
+////////////////////////////////////////////////////////////

@@ -7,8 +7,8 @@ const Form = () => {
 
     const dispatch = useDispatch()
     const types = useSelector((state) => state.types);
-    console.log("types en form:", types);
 
+    /////////////////////////////////             FORM Y ERRORS ////////////////////////////   
     const [form, setForm] = useState({
         name: "",
         img: "",
@@ -29,34 +29,44 @@ const Form = () => {
         speed: "",
         height: "",
         weight: "",
-        types: []
+        types: ""
     })
+    const typesForm = ["normal", "fighting", "flying", "poison", "ground", "rock", "bug", "ghost", "steel", "fire", "water", "grass", "electric", "psychic", "ice", "dragon", "dark", "fairy", "unknown", "shadow"]
 
     // Esta función maneja el clic en un tipo de Pokémon
     const handleTypeClick = (typeName) => {
         // Verifica si el tipo ya está seleccionado
         if (form.selectedTypes.includes(typeName)) {
             // Si ya está seleccionado, lo eliminamos de la lista de tipos seleccionados
+            const updatedTypes = form.selectedTypes.filter((type) => type !== typeName);
             setForm({
                 ...form,
-                selectedTypes: form.selectedTypes.filter((type) => type !== typeName),
+                selectedTypes: updatedTypes,
             });
+            validate({
+                ...form,
+                selectedTypes: updatedTypes,
+            })
         } else {
             // Si no está seleccionado, lo agregamos a la lista de tipos seleccionados
             setForm({
                 ...form,
                 selectedTypes: [...form.selectedTypes, typeName],
             });
+            validate({
+                ...form,
+                selectedTypes: [...form.selectedTypes, typeName],
+            })
         }
     };
-
+    ////////// CHANGE HANDLER MANEJA LOS CAMBIOS EN INPUTS - SETEA EL FORM////////////////////////
     const changeHandler = (event) => {
         const property = event.target.name;
         const value = event.target.value;
         setForm({ ...form, [property]: value })
         validate({ ...form, [property]: value } /*para remplazar este truco podria poner el validate dentro de un useEffect que mire la actualizacion del estado */)
     }
-
+    ///////////////////////////////VALIDATE///////////////////
     const validate = (form) => {
         const newErrors = {
             name: '',
@@ -67,7 +77,7 @@ const Form = () => {
             speed: '',
             height: '',
             weight: '',
-            type: []
+            type: ''
         };
         //------valida name-----------
         if (!/^.{3,10}$/.test(form.name)) {
@@ -119,22 +129,23 @@ const Form = () => {
             newErrors.weight = 'Must contain a number between 100 and 1000.';
         } else { newErrors.weight = '' }
         //-----valida type
-
+        if (form.selectedTypes.length < 2) {
+            newErrors.type = "Debes elegir al menos dos tipos.";
+        } else {
+            newErrors.type = "";
+        }
         setErrors(newErrors);
     };
 
-    // const sumbitHandler = (event) => {
-    //     event.preventDefault()
-    // };
-
+    /////////HANDLE SUBMIT - ENVIA EL FORM A LA ACTION POST POKEMON //////////////////////////////////
     const handleSubmit = (e) => {
         e.preventDefault();
 
         const hasErrors = Object.values(errors).some(error => error);
         const hasMissingFields = Object.values(form).some(field => !field);
-        const hasSelectedTypes = form.types.length >= 2;
+        // const hasSelectedTypes = form.types.length >= 2;
 
-        if (!hasErrors && !hasMissingFields && hasSelectedTypes) {
+        if (!hasErrors && !hasMissingFields /*&& hasSelectedTypes*/) {
             dispatch(postPokemon(form));
             //QUITAR ESTE ALERT!! 
             alert("Successfully added!");
@@ -157,21 +168,7 @@ const Form = () => {
     };
 
 
-    const handleSelect = (e) => {
-        setForm({
-            ...form,
-            types: [...form.types, e.target.value]
-        })
-    }
-
-
-    const handleDelete = (e) => {
-        setForm({
-            ...form,
-            types: form.types.filter(t => t !== e)
-        })
-    }
-
+    //////////// HANDLE RESET -  BORRA TODOS LOS CAMPOS DEL FORM /////////////
     const handleReset = (e) => {
         e.preventDefault();
         setForm({
@@ -241,18 +238,29 @@ const Form = () => {
                 </div>
                 <br /> {/*Cambiar esto por CSS */}
             </div>
+
+
             <h4>Elige al menos dos tipos de Pokémon:</h4>
             <div>
                 {/* Renderiza botones para cada tipo de Pokémon */}
-                {types.map((t) => (
-                    <button
-                        key={t.id}
-                        className={`type-button ${form.selectedTypes.includes(t.name) ? "selected" : ""}`}
-                        onClick={() => handleTypeClick(t.name)}
-                    >
-                        {t.name}
-                    </button>
+                {typesForm.map(elem => (
+                    <div key={elem}>
+                        <input
+                            type="checkbox"
+                            id={elem}
+                            name={elem}
+                            value={elem}
+                            checked={form.selectedTypes.includes(elem)} // Marcar las casillas seleccionadas
+                            onChange={() => handleTypeClick(elem)} // Manejar clic en la casilla
+                        />
+                        <label htmlFor={elem}> {elem}</label>
+                    </div>
                 ))}
+                <span>{errors.type}</span>
+            </div>
+            <div>
+                <button type="reset" onClick={handleReset}>Reset</button>
+                <button type="submit">Submit</button>
             </div>
         </form >
     )
