@@ -85,8 +85,8 @@ const rootReducer = (state = initialState, action) => {
             };
         case CREATE_POKEMON_SUCCESS:
             return { 
-                ...state 
-                //NIY: completar la creacion de pokemon;
+                ...state ,
+                pokemonsRender: [action.payload, ...state.pokemonsRender]
             };
         default:
             return { ...state };

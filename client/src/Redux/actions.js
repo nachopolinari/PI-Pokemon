@@ -137,10 +137,10 @@ export const getPokemonNoCreated = () => {
 export const postPokemon = (payload) => {
     return async function (dispatch) {
         try {
-            const json = await axios.post(`http://localhost:3001/pokemonsPost`, payload);
+            const pokemonCreated = await axios.post(`http://localhost:3001/pokemonsPost`, payload);
             return dispatch({
                 type: CREATE_POKEMON_SUCCESS,
-                payload: json
+                payload: pokemonCreated
             });
         }
         catch (error) {

@@ -1,13 +1,18 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { postPokemon } from "../../Redux/actions";
-import style from "./Form.module.css"
+import { Link } from 'react-router-dom';
+import style from "./Form.module.css";
 
 const Form = () => {
 
     const dispatch = useDispatch()
-    const types = useSelector((state) => state.types);
+    const [formMessage, setFormMessage] = useState('')
 
+
+
+    const types = useSelector((state) => state.types);
+    console.log(types);
     /////////////////////////////////             FORM Y ERRORS ////////////////////////////   
     const [form, setForm] = useState({
         name: "",
@@ -18,7 +23,7 @@ const Form = () => {
         speed: "",
         height: "",
         weight: "",
-        selectedTypes: [],
+        types: [],
     })
     const [errors, setErrors] = useState({
         name: "",
@@ -31,31 +36,30 @@ const Form = () => {
         weight: "",
         types: ""
     })
-    const typesForm = ["normal", "fighting", "flying", "poison", "ground", "rock", "bug", "ghost", "steel", "fire", "water", "grass", "electric", "psychic", "ice", "dragon", "dark", "fairy", "unknown", "shadow"]
 
     // Esta función maneja el clic en un tipo de Pokémon
     const handleTypeClick = (typeName) => {
         // Verifica si el tipo ya está seleccionado
-        if (form.selectedTypes.includes(typeName)) {
+        if (form.types.includes(typeName)) {
             // Si ya está seleccionado, lo eliminamos de la lista de tipos seleccionados
-            const updatedTypes = form.selectedTypes.filter((type) => type !== typeName);
+            const updatedTypes = form.types.filter((type) => type !== typeName);
             setForm({
                 ...form,
-                selectedTypes: updatedTypes,
+                types: updatedTypes,
             });
             validate({
                 ...form,
-                selectedTypes: updatedTypes,
+                types: updatedTypes,
             })
         } else {
             // Si no está seleccionado, lo agregamos a la lista de tipos seleccionados
             setForm({
                 ...form,
-                selectedTypes: [...form.selectedTypes, typeName],
+                types: [...form.types, typeName],
             });
             validate({
                 ...form,
-                selectedTypes: [...form.selectedTypes, typeName],
+                types: [...form.types, typeName],
             })
         }
     };
@@ -86,12 +90,13 @@ const Form = () => {
             newErrors.name = 'Cannot contain numbers or special characters.';
         } else { newErrors.name = '' }
         //-------valida img-----------
-        if (!/^.{1,25}$/.test(form.img)) {
+        if (!/^.{1,100}$/.test(form.img)) {
             newErrors.img = 'Cannot be empty.';
-        } else if (!/^(https?:\/\/)?([\w\d]+\.)?[\w\d]+\.\w{2,}(\/.*)?$/.test(form.img)) {
-            newErrors.img = 'Please enter a valid URL.';
-
-        } else { newErrors.img = '' }
+        } else if (!/^https?:\/\/\S+\.(png|jpg|jpeg|gif|bmp)$/i.test(form.img)) {
+            newErrors.img = 'Please enter a valid image URL (png, jpg, jpeg, gif, bmp formats are allowed).';
+        } else {
+            newErrors.img = '';
+        }
         //---------valida life-----------
         if (!/^.+$/.test(form.life)) {
             newErrors.life = 'Cannot be empty.';
@@ -129,7 +134,7 @@ const Form = () => {
             newErrors.weight = 'Must contain a number between 100 and 1000.';
         } else { newErrors.weight = '' }
         //-----valida type
-        if (form.selectedTypes.length < 2) {
+        if (form.types.length < 2) {
             newErrors.type = "Debes elegir al menos dos tipos.";
         } else {
             newErrors.type = "";
@@ -138,18 +143,21 @@ const Form = () => {
     };
 
     /////////HANDLE SUBMIT - ENVIA EL FORM A LA ACTION POST POKEMON //////////////////////////////////
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    //Object.values(errors)->extrae los valores del obj errors y los devuelve en un array que luego recorro con .some//
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
 
         const hasErrors = Object.values(errors).some(error => error);
         const hasMissingFields = Object.values(form).some(field => !field);
-        // const hasSelectedTypes = form.types.length >= 2;
+        const hasTypes = form.types.length >= 2;
 
-        if (!hasErrors && !hasMissingFields /*&& hasSelectedTypes*/) {
+        if (!hasErrors && !hasMissingFields && hasTypes) {
+
             dispatch(postPokemon(form));
-            //QUITAR ESTE ALERT!! 
-            alert("Successfully added!");
-            //reinicia el form
+
+            setFormMessage("Perfect! You've created your Pokémon!");
+
             setForm({
                 name: "",
                 img: "",
@@ -161,16 +169,13 @@ const Form = () => {
                 weight: "",
                 types: []
             });
-        } else {
-            //QUITAR ESTE ALERT!! 
-            alert("Incorrect data, please try again!");
+
         }
-    };
-
-
+        else { setFormMessage('Please fill out the required fields') }
+    }
     //////////// HANDLE RESET -  BORRA TODOS LOS CAMPOS DEL FORM /////////////
-    const handleReset = (e) => {
-        e.preventDefault();
+    const handleReset = (event) => {
+
         setForm({
             name: "",
             img: "",
@@ -243,21 +248,31 @@ const Form = () => {
             <h4>Elige al menos dos tipos de Pokémon:</h4>
             <div>
                 {/* Renderiza botones para cada tipo de Pokémon */}
-                {typesForm.map(elem => (
-                    <div key={elem}>
+                {types && types.map((type) => (
+                    <div key={type.name}>
                         <input
                             type="checkbox"
-                            id={elem}
-                            name={elem}
-                            value={elem}
-                            checked={form.selectedTypes.includes(elem)} // Marcar las casillas seleccionadas
-                            onChange={() => handleTypeClick(elem)} // Manejar clic en la casilla
+                            id={type.name}
+                            name={type.name}
+                            value={type.name}
+                            checked={form.types && form.types.includes(type.name)}// Marcar las casillas seleccionadas
+                            onChange={() => handleTypeClick(type.name)} // Manejar clic en la casilla
                         />
-                        <label htmlFor={elem}> {elem}</label>
+                        <label htmlFor={type.name}> {type.name}</label>
                     </div>
                 ))}
                 <span>{errors.type}</span>
             </div>
+
+            {/* ---------cartel de postPokemon Successfully condicional------- */}
+            {formMessage && <div className={style.formMessage}>
+                {formMessage}
+                <Link to='/home'>
+                    <button>Go see it!</button>
+                </Link>
+            </div>}
+
+
             <div>
                 <button type="reset" onClick={handleReset}>Reset</button>
                 <button type="submit">Submit</button>

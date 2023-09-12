@@ -14,18 +14,26 @@ const Home = () => {
     const types = useSelector((state) => state.types);
     const [loading, setLoading] = useState(true);
     const dispatch = useDispatch();
-   
+
 
     useEffect(() => {
-        dispatch(getPokemons(), getTypes())
-
-            .then(() => setLoading(false))
-            .catch(error => {//SACAR ESTE CONSOLE.LOG Y MANEJAR ERROR
+        // Despacha la acción getPokemons() y espera a que se complete
+        dispatch(getPokemons())
+            .then(() => {
+                // Despacha la acción getTypes() y espera a que se complete
+                return dispatch(getTypes());
+            })
+            .then(() => {
+                // Cuando ambas acciones se completen, establece setLoading(false)
+                setLoading(false);
+            })
+            .catch(error => {
+                // Maneja cualquier error que pueda ocurrir
                 console.error(error);
                 setLoading(false);
             });
     }, [dispatch]);
-    console.log("types en HOME:", types);
+
 
     //----------ORDEN POR NOMBRE------------
     function orderforName(event) {
@@ -36,7 +44,7 @@ const Home = () => {
         else {
 
             dispatch(orderByName(value))
-           
+
         }
     }
     //---------ORDEN POR ATAQUE----------------
@@ -111,38 +119,23 @@ const Home = () => {
                     <select className={style.select} onChange={event => filterByCreated(event)}>
                         <option className={style.option} key='all' value='all'>All</option>
                         <option className={style.option} key='db' value='db'>Created</option>
-                        <option className={style.option} key='api' value='api'>Api Pokemons</option>
+                        <option className={style.option} key='api' value='api'>Trapped</option>
                     </select>
                 </div>
                 {/* -----------FILTRO POR TIPO-------------- */}
                 <div>
                     <h5 className={style.sortfilter}>Filter by Type</h5>
-                    <select className={style.select} onChange={e => filterforType(e)}>
+                    <select className={style.select} onChange={event => filterforType(event)}>
+
                         <option className={style.option} key='All' value='All'>All</option>
-                        <option className={style.option} key='normal' value='normal'>Normal</option>
-                        <option className={style.option} key='fighting' value='fighting'>Fighting</option>
-                        <option className={style.option} key='flying' value='flying'>Flying</option>
-                        <option className={style.option} key='poison' value='poison'>Poison</option>
-                        <option className={style.option} key='ground' value='ground'>Ground</option>
-                        <option className={style.option} key='rock' value='rock'>Rock</option>
-                        <option className={style.option} key='bug' value='bug'>Bug</option>
-                        <option className={style.option} key='ghost' value='ghost'>Ghost</option>
-                        <option className={style.option} key='steel' value='steel'>Steel</option>
-                        <option className={style.option} key='fire' value='fire'>Fire</option>
-                        <option className={style.option} key='water' value='water'>Water</option>
-                        <option className={style.option} key='grass' value='grass'>Grass</option>
-                        <option className={style.option} key='electric' value='electric'>Electric</option>
-                        <option className={style.option} key='psychic' value='psychic'>Psychic</option>
-                        <option className={style.option} key='ice' value='ice'>Ice</option>
-                        <option className={style.option} key='dragon' value='dragon'>Dragon</option>
-                        <option className={style.option} key='dark' value='dark'>Dark</option>
-                        <option className={style.option} key='fairy' value='fairy'>Fairy</option>
-                        <option className={style.option} key='unknown' value='unknown'>Unknown</option>
-                        <option className={style.option} key='shadow' value='shadow'>Shadow</option>
+                        {types && types.map(type => (
+                            <option className={style.option} key={type.name} value={type.name}>{type.name}</option>
+
+                        ))}
                     </select>
                 </div>
-            </div>
-           
+            </div >
+
             <div>
                 {/* ---------TERNARIO : LOADING VS CardContainer----------- */}
                 <div className='pokemons-home'>
