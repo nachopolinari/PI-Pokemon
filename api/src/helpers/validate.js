@@ -1,3 +1,4 @@
+
 const validate = (req, res, next) => {
     const { name, img, life, attack, defense, speed, height, weight, types } = req.body;
 
@@ -9,9 +10,10 @@ const validate = (req, res, next) => {
     if (!speed) res.status(400).json({ error: 'Missing speed' });
     if (!height) res.status(400).json({ error: 'Missing height' });
     if (!weight) res.status(400).json({ error: 'Missing weight' });
-//if (!types) res.status(400).json({ error: 'Missing types' });
+    if (!types) res.status(400).json({ error: 'Missing types' });
 
     next();
 };
 
 module.exports = validate;
+

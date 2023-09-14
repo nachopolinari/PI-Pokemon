@@ -18,13 +18,23 @@
 //                       `=---='
 //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+
 const server = require('./src/app.js');
 const { conn } = require('./src/db.js');
 
-//la responsabilidad de iniciar la aplicacion
-// Syncing all the models at once.
-conn.sync({ force:true }).then(() => { //la config force:true elimina las tablas creadas en BD y vuelve a crear cada vez q se actualice . lo usaremos durante la prod.desp cambiaremos a alter:true 
-  server.listen(3001, () => {
-    console.log('%s listening at 3001'); // eslint-disable-line no-console
+/**
+ * Este archivo es el punto de entrada del servidor.
+ * Inicializa la aplicación y sincroniza la base de datos.
+ */
+
+// Sincronizamos todos los modelos con la base de datos.
+conn.sync({ alter: true })
+  .then(() => {
+    // El servidor comienza a escuchar en el puerto 3001 una vez que la base de datos está lista.
+    server.listen(3001, () => {//force:true->elimina alter:true->permanece
+      console.log('Servidor escuchando en el puerto 3001'); // Se elimina la etiqueta %s para una salida más clara.
+    });
+  })
+  .catch((error) => {
+    console.error('Error al sincronizar la base de datos:', error);
   });
-});

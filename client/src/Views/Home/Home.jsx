@@ -6,7 +6,7 @@
 import { useEffect, useState } from "react";
 import CardContainer from "../../Components/CardContainer/CardContainer";
 import { useDispatch, useSelector } from "react-redux";
-import { getPokemons, getTypes, orderByName, getPokemonCreated, getPokemonNoCreated, orderAttack, getPokemonForType } from '../../Redux/actions'
+import { getAllPokemons, getPokemons, getAllTypes, orderByName, getPokemonCreated, getPokemonNoCreated, orderAttack, getPokemonForType } from '../../Redux/actions'
 import style from './Home.module.css'
 import Loading from "../../Components/Loading/Loading";
 
@@ -18,10 +18,10 @@ const Home = () => {
 
     useEffect(() => {
         // Despacha la acción getPokemons() y espera a que se complete
-        dispatch(getPokemons())
+        dispatch(getAllPokemons())
             .then(() => {
                 // Despacha la acción getTypes() y espera a que se complete
-                return dispatch(getTypes());
+                return dispatch(getAllTypes());
             })
             .then(() => {
                 // Cuando ambas acciones se completen, establece setLoading(false)
@@ -39,7 +39,8 @@ const Home = () => {
     function orderforName(event) {
         let value = event.target.value
         if (value === 'default') {
-            dispatch(getPokemons())
+            dispatch(getAllPokemons())
+            //getPokemons para que muestre el render
         }
         else {
 
@@ -52,7 +53,9 @@ const Home = () => {
         let value = event.target.value
 
         if (value === 'default2') {
-            dispatch(getPokemons())
+            dispatch(getAllPokemons())
+            //getPokemons para que muestre el render
+
         }
         else {
             dispatch(orderAttack(value))
@@ -64,13 +67,12 @@ const Home = () => {
     function filterByCreated(event) {
         let value = event.target.value
         if (value === 'all') {
-            dispatch(getPokemons())
-        }
-        else if (value === 'db') {
-            dispatch(getPokemonCreated())
+            dispatch(getAllPokemons())
+            //getPokemons para que muestre el render
+
         }
         else {
-            dispatch(getPokemonNoCreated())
+            dispatch(getPokemonCreated(value))
         }
     }
     // --------------FILTRO POR TIPO--------------
@@ -78,7 +80,9 @@ const Home = () => {
     function filterforType(event) {
         let value = event.target.value
         if (value === 'All') {
-            dispatch(getPokemons())
+            dispatch(getAllPokemons())
+            //getPokemons para que muestre el render
+
         }
         else {
             dispatch(getPokemonForType(value))

@@ -2,58 +2,34 @@ const axios = require('axios');
 const { API_POKEMON } = require('../utils/urls');
 
 const getApiPoke = async () => {
-    // Traer todo de la API
+    // Hacer una solicitud a la API de Pokémon para obtener datos de Pokémon
     const apiResponse = await axios.get(API_POKEMON);
-    //Desmenuzar la Info de la API
-    const apiPokeInfo = apiResponse.data.results;// el data es por axios y el results es por la api de Pokemon
-    //Consigo las URL de los pokemons
-    const apiPokeInfoURL = await Promise.all(apiPokeInfo.map(elem => axios.get(elem.url)));//Al usar Promise.all(), se espera a que todas las promesas generadas por el mapeo de las URLs se resuelvan y se obtiene un array con los resultados una vez que todas las promesas estén completas.
-    //mapeo final para filtrar la info que no me sirve
+
+    // Descomponer la información de la API para obtener una lista de Pokémon
+    const apiPokeInfo = apiResponse.data.results;
+
+    // Hacer solicitudes individuales a las URLs de cada Pokémon en la lista
+    const apiPokeInfoURL = await Promise.all(apiPokeInfo.map(elem => axios.get(elem.url)));
+
+    // Mapear la información para obtener los datos relevantes de cada Pokémon
     const apiPoke = apiPokeInfoURL.map(elem => {
         return {
             id: elem.data.id,
             name: elem.data.name,
-            img: elem.data.sprites.other.home.front_default, //revisar que imagen quiero
+            img: elem.data.sprites.other.home.front_default,
             life: elem.data.stats[0].base_stat,
             attack: elem.data.stats[1].base_stat,
             defense: elem.data.stats[2].base_stat,
             speed: elem.data.stats[5].base_stat,
-            height: (elem.data.height) / 10, //paso de decimetros a metros
-            weight: (elem.data.weight) / 10, //paso de decigramos a kg.
+            height: (elem.data.height) / 10, // Convertir de decímetros a metros
+            weight: (elem.data.weight) / 10, // Convertir de decigramos a kilogramos
             types: elem.data.types.map(t => t.type.name),
-            created: false
+            created: false // Indicar que estos Pokémon no fueron creados por el usuario
         };
     });
+
+    // Retornar la lista de Pokémon con los datos obtenidos de la API
     return apiPoke;
 };
 
 module.exports = { getApiPoke };
-
-// ----------------------------///////////////////////////////////////////////////////////////////
-// const getPokemonsApi = async () => {
-//     try {
-//         const api = await axios.get("https://pokeapi.co/api/v2/pokemon/?limit=200")
-
-//         const pokeApi = api.data.results //guardo la informacion en una constante para luego mapearla y modificar segun la info de la url
-//         // console.log(pokeApi);
-//         const dataPokemon = await Promise.all(pokeApi.map(elem => axios.get(elem.url)));
-//         const info = dataPokemon.map(elem => {
-
-//             return {
-//                 id: elem.data.id,
-//                 name: elem.data.name,
-//                 img: elem.data.sprites.other.home.front_default, //revisar que imagen quiero
-//                 life: elem.data.stats[0].base_stat,
-//                 attack: elem.data.stats[1].base_stat,
-//                 defense: elem.data.stats[2].base_stat,
-//                 speed: elem.data.stats[5].base_stat,
-//                 height: elem.data.height,
-//                 weight: elem.data.weight,
-//                 hp: elem.data.stats[0].base_stat,
-//                 types: elem.data.types.map((e) => e.type.name)
-//             };
-//         });
-//         return apiPoke;
-//     };
-
-////////////////////////////////////////////////////////////

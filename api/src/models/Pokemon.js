@@ -1,8 +1,8 @@
 const { DataTypes } = require('sequelize');
-// Exportamos una funcion que define el modelo
-// Luego le injectamos la conexion a sequelize.
+
+// Exportamos una función que define el modelo y le inyecta la conexión a sequelize.
 module.exports = (sequelize) => {
-  // defino el modelo
+  // Definimos el modelo 'pokemon'.
   sequelize.define('pokemon', {
     id: {
       type: DataTypes.UUID,
@@ -12,7 +12,7 @@ module.exports = (sequelize) => {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true
+      unique: true,
     },
     img: {
       type: DataTypes.TEXT,
@@ -40,12 +40,11 @@ module.exports = (sequelize) => {
     weight: {
       type: DataTypes.FLOAT,
     },
-    created: {//esta marca me servira para filtrar los creados por mi de los que vienen de la api ext
+    created: {
       type: DataTypes.BOOLEAN,
       defaultValue: true,
     },
-
   }, {
-    timestamps: false
+    timestamps: false, // Desactivamos los timestamps (created_at y updated_at) en este modelo.
   });
 };

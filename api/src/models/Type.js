@@ -1,9 +1,9 @@
 const { DataTypes, Sequelize } = require('sequelize');
 const sequelize = require('../db'); // Asegúrate de importar correctamente tu instancia de Sequelize
-// Exportamos una funcion que define el modelo
-// Luego le injectamos la conexion a sequelize.
+
+// Exportamos una función que define el modelo y le inyecta la conexión a sequelize.
 module.exports = (sequelize) => {
-  // defino el modelo
+  // Definimos el modelo 'type'.
   sequelize.define('type', {
     id: {
       type: DataTypes.UUID,
@@ -14,14 +14,7 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    // pokemon: {
-    //   type: Datatypes.ARRAY,
-    //   allowNull:false,
-    // }
-
-  },
-    {
-      timestamps: false
-    })
-}
-
+  }, {
+    timestamps: false, // Desactivamos los timestamps (created_at y updated_at) en este modelo.
+  });
+};

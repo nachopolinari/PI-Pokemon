@@ -21,7 +21,7 @@ const CardContainer = () => {
     return (<>
 
         {/* ------------------------PAGINADO-------------- */}
-
+       
         <div className={style.pagination}>
             <button onClick={() => prevPage()} disabled={currentPage === 1} className={style.paginationButton}>Prev</button>
             <span> {currentPage} / {totalPages}</span>

@@ -8,10 +8,9 @@ const getPokeByIdHandler = async (req, res) => {
     // Debe funcionar tanto para los pokemones de la API como para los de la base de datos.
     const { id } = req.params;
 
-    const source = isNaN(id) ? "bdd" : "api" //flag que me sirve para identificar si id es numerico y buscará en API o si es alfa-numerico y buscará en BDD
-
+    
     try {
-        const pokeById = await getPokeByID(id, source);
+        const pokeById = await getPokeByID(id);
         res.status(200).json(pokeById);
 
     } catch (error) {

@@ -3,18 +3,15 @@ import { useState } from 'react';
 
 const SearchBar = ({ onSearch }) => {
     const [searchValue, setSearchValue] = useState('');
-    // const [searchType, setSearchType] = useState('name'); // Por defecto, buscar por nombre
-
-    // const handleSearchTypeChange = (event) => {
-    //     setSearchType(event.target.value);
-    // };
 
     const handleInputChange = (event) => {
         setSearchValue(event.target.value);
     };
 
+    
     const handleSearch = () => {
-        onSearch(searchValue, /*searchType*/);
+        onSearch(searchValue);
+        setSearchValue('');
     };
 
     return (
@@ -23,16 +20,10 @@ const SearchBar = ({ onSearch }) => {
                 type='search'
                 value={searchValue}
                 onChange={handleInputChange}
-                placeholder= ' Name or ID'
+                placeholder=' Name or ID'
             />
-            {/* <select className={style.select} onChange={handleSearchTypeChange} value={searchType}>
-                <option value="name">Nombre</option>
-                <option value="id">ID</option>
-            </select> */}
-            
-            
             <button onClick={handleSearch}>Buscar</button>
-            
+
         </div>
     );
 };

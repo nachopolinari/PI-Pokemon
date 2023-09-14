@@ -1,14 +1,12 @@
-//esta funciona va a:
-//1- buscar todos los pokemons que tengamos en la BDD (los 60+los creados) 
-//2- los va a filtrar por type (devuelve un array de pokemones)
-//3- itera cada poke.types con el forEach si el elem iterado incluye el type del argumento (true) retorna check true y el filter lo va a ir agregando al array llamado "typesFilter"
-//4- finalmente retorna typesFilter
-
 const getAllPoke = require('../controllers/getAllPoke');
 
+// Esta función filtra los Pokémon por tipo y retorna un array de Pokémon que incluyen el tipo especificado.
 const searchType = async (type) => {
     try {
+        // Obtener todos los Pokémon de la base de datos.
         const pokemons = await getAllPoke();
+
+        // Filtrar los Pokémon cuyos tipos incluyan el tipo especificado.
         const typesFilter = pokemons.filter(poke =>
             poke.types.includes(type.toLowerCase())
         );
