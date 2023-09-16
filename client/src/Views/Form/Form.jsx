@@ -9,10 +9,7 @@ const Form = () => {
     const dispatch = useDispatch()
     const [formMessage, setFormMessage] = useState('')
 
-
-
     const types = useSelector((state) => state.types);
-    console.log(types);
     /////////////////////////////////             FORM Y ERRORS ////////////////////////////   
     const [form, setForm] = useState({
         name: "",
@@ -199,57 +196,57 @@ const Form = () => {
                     <input type="text" name="name" value={form.name} onChange={changeHandler} placeholder='' />
                     <span>{errors.name}</span>
                 </div>
-                <br /> {/*Cambiar esto por CSS */}
+                <br /> 
                 <div>
                     <label htmlFor="">Image: </label>
                     <input type="text" name="img" value={form.img} onChange={changeHandler} placeholder='https://pokemon-image.com' />
                     <span>{errors.img}</span>
                 </div>
-                <br /> {/*Cambiar esto por CSS */}
+                <br />
                 <div>
                     <label htmlFor="">Life  :  </label>
                     <input type="text" name="life" value={form.life} onChange={changeHandler} placeholder='1-250' />
                     <span>{errors.life}</span>
                 </div>
-                <br /> {/*Cambiar esto por CSS */}
+                <br /> 
                 <div>
                     <label htmlFor="">Attack: </label>
                     <input type="text" name="attack" value={form.attack} onChange={changeHandler} placeholder='10-190' />
                     <span>{errors.attack}</span>
                 </div>
-                <br /> {/*Cambiar esto por CSS */}
+                <br /> 
                 <div>
                     <label htmlFor="">Defense: </label>
                     <input type="text" name="defense" value={form.defense} onChange={changeHandler} placeholder='10-190' />
                     <span>{errors.defense}</span>
                 </div>
-                <br /> {/*Cambiar esto por CSS */}
+                <br /> 
                 <div>
                     <label htmlFor="">Speed: </label>
                     <input type="text" name="speed" value={form.speed} onChange={changeHandler} placeholder='10-190' />
                     <span>{errors.speed}</span>
                 </div>
-                <br /> {/*Cambiar esto por CSS */}
+                <br /> 
                 <div>
                     <label htmlFor="">Height: </label>
                     <input type="text" name="height" value={form.height} onChange={changeHandler} placeholder='10-190' />
                     <span>{errors.height}</span>
                 </div>
-                <br /> {/*Cambiar esto por CSS */}
+                <br /> 
                 <div>
                     <label htmlFor="">Weight: </label>
                     <input type="text" name="weight" value={form.weight} onChange={changeHandler} placeholder='100-1000' />
                     <span>{errors.weight}</span>
                 </div>
-                <br /> {/*Cambiar esto por CSS */}
+                <br /> 
             </div>
 
 
             <h4>Elige al menos dos tipos de Pokémon:</h4>
-            <div>
+            <div className={style.inputContainerTypes}>
                 {/* Renderiza botones para cada tipo de Pokémon */}
                 {types && types.map((type) => (
-                    <div key={type.name}>
+                    <div key={type.name} className={style.inputTypes}>
                         <input
                             type="checkbox"
                             id={type.name}
@@ -261,8 +258,8 @@ const Form = () => {
                         <label htmlFor={type.name}> {type.name}</label>
                     </div>
                 ))}
-                <span>{errors.type}</span>
             </div>
+                <span>{errors.type}</span>
 
             {/* ---------cartel de postPokemon Successfully condicional------- */}
             {formMessage && <div className={style.formMessage}>

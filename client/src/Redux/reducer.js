@@ -30,7 +30,7 @@ const rootReducer = (state = initialState, action) => {
                 pokemonsRender: action.payload
             };
         case GET_POKEMONS:
-            
+
             return {
                 ...state,
                 pokemonsRender: state.allPokemons
@@ -60,15 +60,37 @@ const rootReducer = (state = initialState, action) => {
                 allPokemons: [action.payload, ...state.allPokemons],
                 pokemonsRender: [action.payload, ...state.pokemonsRender]
             };
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         case GET_POKEMONS_FOR_TYPE:
-            const filteredPokemons = state.pokemonsRender.filter((pokemon) => {
-                // Verificar si el Pokemon tiene la propiedad 'types' y si contiene el tipo seleccionado
-                return pokemon.types && pokemon.types.includes(action.payload);
+            const filteredPokemons = state.allPokemons.filter((pokemon) => {
+                if (pokemon.created) {
+                    // Si el Pokemon fue creado por ti, verificar si el tipo está en el array de types
+                    return pokemon.types.some((type) => type.name === action.payload);
+                } else {
+                    // Si el Pokemon viene de la API, verificar si el tipo está en el array de types como string
+                    return pokemon.types.includes(action.payload);
+                }
             });
             return {
                 ...state,
-                pokemonsRender: filteredPokemons
+                pokemonsRender: filteredPokemons,
             };
+
+
+        // case GET_POKEMONS_FOR_TYPE:
+        //     const filteredPokemons = state.allPokemons.filter((pokemon) => {
+        //         // Verificar si el Pokemon tiene la propiedad 'types' y si contiene el tipo seleccionado
+        //         return pokemon.types && pokemon.types.includes(action.payload);
+        //     });
+        //     return {
+        //         ...state,
+        //         pokemonsRender: filteredPokemons
+        //     };
+
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         case ORDER_POKEMONS_BY_NAME:
             const clonedRender = [...state.pokemonsRender];
             clonedRender.sort(function (a, b) {

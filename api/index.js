@@ -28,11 +28,11 @@ const { conn } = require('./src/db.js');
  */
 
 // Sincronizamos todos los modelos con la base de datos.
-conn.sync({ alter: true })
+conn.sync({ alter:true })//force:true->elimina alter:true->permanece
   .then(() => {
     // El servidor comienza a escuchar en el puerto 3001 una vez que la base de datos está lista.
-    server.listen(3001, () => {//force:true->elimina alter:true->permanece
-      console.log('Servidor escuchando en el puerto 3001'); // Se elimina la etiqueta %s para una salida más clara.
+    server.listen(3001, () => {
+      console.log('Server listening on port 3001'); // Se elimina la etiqueta %s para una salida más clara.
     });
   })
   .catch((error) => {

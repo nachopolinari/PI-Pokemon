@@ -17,16 +17,19 @@ const NavBar = () => {
         }
     };
 
-    return (
+    return (<>
+        <div className={style.navBarBackground}>
+        </div>
         <div className={style.navBarContainer}>
             <div className={style.navBarDiv}>
-                <Link to="/home">Voy a Home</Link>
-                <Link to="/form">Voy a Form</Link>
+                <Link to="/home" className={style.NavBarButton}>Home</Link>
+                <Link to="/form" className={style.NavBarButton}>Form</Link>
             </div>
             <div className={style.navBarDiv}>
                 <SearchBar onSearch={onSearch} />
             </div>
         </div>
+    </>
     );
 };
 

@@ -1,101 +1,91 @@
 //📍 View principal de mi APP
-//1-trae types del estado global
-//2- crea el estado local loading
-//3- al montarse el componente despacha las actions que cargaran al estado global los pokemons y los types desde la BD y API
-//4- crea las funciones que ordenan/filtran y despachan al reducer
+// 1-trae types del estado global
+// 2- crea el estado local loading
+// 3- al montarse el componente despacha las actions que cargaran al estado global los pokemons y los types desde la BD y API
+// 4- crea las funciones que ordenan/filtran y despachan al reducer
 import { useEffect, useState } from "react";
 import CardContainer from "../../Components/CardContainer/CardContainer";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllPokemons, getPokemons, getAllTypes, orderByName, getPokemonCreated, getPokemonNoCreated, orderAttack, getPokemonForType } from '../../Redux/actions'
+import {  getAllPokemons,  getAllTypes,  orderByName,  getPokemonCreated,  orderAttack,  getPokemonForType,} from '../../Redux/actions'
 import style from './Home.module.css'
 import Loading from "../../Components/Loading/Loading";
 
 const Home = () => {
+    // Accede a los tipos de Pokemon desde el estado global.
     const types = useSelector((state) => state.types);
+    // Crea un estado local para manejar la carga.
     const [loading, setLoading] = useState(true);
+    // Inicializa el dispatcher.
     const dispatch = useDispatch();
 
-
     useEffect(() => {
-        // Despacha la acción getPokemons() y espera a que se complete
+        // Al montarse el componente, despacha acciones para cargar datos desde la BD y API al estado global.
         dispatch(getAllPokemons())
             .then(() => {
-                // Despacha la acción getTypes() y espera a que se complete
                 return dispatch(getAllTypes());
             })
             .then(() => {
-                // Cuando ambas acciones se completen, establece setLoading(false)
+                // Cuando ambas acciones se completan, establece setLoading(false).
                 setLoading(false);
             })
             .catch(error => {
-                // Maneja cualquier error que pueda ocurrir
+                // Maneja cualquier error que pueda ocurrir durante la carga.
                 console.error(error);
                 setLoading(false);
             });
     }, [dispatch]);
 
-
-    //----------ORDEN POR NOMBRE------------
+    // Función para ordenar Pokemon por nombre.
     function orderforName(event) {
-        let value = event.target.value
+        let value = event.target.value;
         if (value === 'default') {
-            dispatch(getAllPokemons())
-            //getPokemons para que muestre el render
-        }
+            dispatch(getAllPokemons());
+            }
         else {
-
-            dispatch(orderByName(value))
-
+            dispatch(orderByName(value));
         }
     }
-    //---------ORDEN POR ATAQUE----------------
+
+    // Función para ordenar Pokemon por ataque.
     const orderByAttack = (event) => {
-        let value = event.target.value
+        let value = event.target.value;
 
         if (value === 'default2') {
-            dispatch(getAllPokemons())
-            //getPokemons para que muestre el render
-
-        }
+            dispatch(getAllPokemons());
+            }
         else {
-            dispatch(orderAttack(value))
-            // setCurrentPage(p=>p=1)
-            // setorderattack(`ordenadopscore ${e.target.value}`)
-        }
+            dispatch(orderAttack(value));
+         }
     }
-    //------------------FILTRO POR CREADO-------------------
+
+    // Función para filtrar Pokemon por su estado de creación.
     function filterByCreated(event) {
-        let value = event.target.value
+        let value = event.target.value;
         if (value === 'all') {
-            dispatch(getAllPokemons())
-            //getPokemons para que muestre el render
-
-        }
+            dispatch(getAllPokemons());
+            }
         else {
-            dispatch(getPokemonCreated(value))
+            dispatch(getPokemonCreated(value));
         }
     }
-    // --------------FILTRO POR TIPO--------------
 
+    // Función para filtrar Pokemon por tipo.
     function filterforType(event) {
-        let value = event.target.value
+        let value = event.target.value;
         if (value === 'All') {
-            dispatch(getAllPokemons())
-            //getPokemons para que muestre el render
-
+            dispatch(getAllPokemons());
         }
         else {
-            dispatch(getPokemonForType(value))
+            dispatch(getPokemonForType(value));
         }
     }
+
     return (
         <div className={style.homeContainer}>
-            <div className="home-title">
-                {/* Contenido de la sección de título (si lo hay) */}
-            </div>
+           
             <div className={style.sortsContainer}>
                 {/* Contenido de la barra superior (botones, selectores, etc.) */}
-
+                
                 {/* -------------------------ORDEN POR NOMBRE------------- */}
                 <div>
                     <h5 className={style.sortfilter}>Sort by Name</h5>
@@ -117,7 +107,6 @@ const Home = () => {
                 </div>
 
                 {/* ---------------------FILTRO POR CREADO------------ */}
-
                 <div>
                     <h5 className={style.sortfilter}>Filter Created</h5>
                     <select className={style.select} onChange={event => filterByCreated(event)}>
@@ -130,7 +119,6 @@ const Home = () => {
                 <div>
                     <h5 className={style.sortfilter}>Filter by Type</h5>
                     <select className={style.select} onChange={event => filterforType(event)}>
-
                         <option className={style.option} key='All' value='All'>All</option>
                         {types && types.map(type => (
                             <option className={style.option} key={type.name} value={type.name}>{type.name}</option>
@@ -141,14 +129,166 @@ const Home = () => {
             </div >
 
             <div>
-                {/* ---------TERNARIO : LOADING VS CardContainer----------- */}
+                {/* Ternario que muestra Loading o CardContainer según el estado de carga. */}
                 <div className='pokemons-home'>
                     {loading ? <Loading /> : <CardContainer />}
                 </div>
             </div>
-
         </div >
     );
-
 };
+
 export default Home;
+
+//📍 View principal de mi APP
+// //1-trae types del estado global
+// //2- crea el estado local loading
+// //3- al montarse el componente despacha las actions que cargaran al estado global los pokemons y los types desde la BD y API
+// //4- crea las funciones que ordenan/filtran y despachan al reducer
+// import { useEffect, useState } from "react";
+// import CardContainer from "../../Components/CardContainer/CardContainer";
+// import { useDispatch, useSelector } from "react-redux";
+// import { getAllPokemons, getPokemons, getAllTypes, orderByName, getPokemonCreated, getPokemonNoCreated, orderAttack, getPokemonForType } from '../../Redux/actions'
+// import style from './Home.module.css'
+// import Loading from "../../Components/Loading/Loading";
+
+// const Home = () => {
+//     const types = useSelector((state) => state.types);
+//     const [loading, setLoading] = useState(true);
+//     const dispatch = useDispatch();
+
+
+//     useEffect(() => {
+//         // Despacha la acción getPokemons() y espera a que se complete
+//         dispatch(getAllPokemons())
+//             .then(() => {
+//                 // Despacha la acción getTypes() y espera a que se complete
+//                 return dispatch(getAllTypes());
+//             })
+//             .then(() => {
+//                 // Cuando ambas acciones se completen, establece setLoading(false)
+//                 setLoading(false);
+//             })
+//             .catch(error => {
+//                 // Maneja cualquier error que pueda ocurrir
+//                 console.error(error);
+//                 setLoading(false);
+//             });
+//     }, [dispatch]);
+
+
+//     //----------ORDEN POR NOMBRE------------
+//     function orderforName(event) {
+//         let value = event.target.value
+//         if (value === 'default') {
+//             dispatch(getAllPokemons())
+//             //getPokemons para que muestre el render
+//         }
+//         else {
+
+//             dispatch(orderByName(value))
+
+//         }
+//     }
+//     //---------ORDEN POR ATAQUE----------------
+//     const orderByAttack = (event) => {
+//         let value = event.target.value
+
+//         if (value === 'default2') {
+//             dispatch(getAllPokemons())
+//             //getPokemons para que muestre el render
+
+//         }
+//         else {
+//             dispatch(orderAttack(value))
+//             // setCurrentPage(p=>p=1)
+//             // setorderattack(`ordenadopscore ${e.target.value}`)
+//         }
+//     }
+//     //------------------FILTRO POR CREADO-------------------
+//     function filterByCreated(event) {
+//         let value = event.target.value
+//         if (value === 'all') {
+//             dispatch(getAllPokemons())
+//             //getPokemons para que muestre el render
+
+//         }
+//         else {
+//             dispatch(getPokemonCreated(value))
+//         }
+//     }
+//     // --------------FILTRO POR TIPO--------------
+
+//     function filterforType(event) {
+//         let value = event.target.value
+//         if (value === 'All') {
+//             dispatch(getAllPokemons())
+//             //getPokemons para que muestre el render
+
+//         }
+//         else {
+//             dispatch(getPokemonForType(value))
+//         }
+//     }
+//     return (
+//         <div className={style.homeContainer}>
+           
+//             <div className={style.sortsContainer}>
+               
+
+//                 {/* -------------------------ORDEN POR NOMBRE------------- */}
+//                 <div>
+//                     <h5 className={style.sortfilter}>Sort by Name</h5>
+//                     <select className={style.select} onChange={event => orderforName(event)}>
+//                         <option className={style.option} key='default1' value='default'>Default</option>
+//                         <option className={style.option} key='az' value='az'>A-Z</option>
+//                         <option className={style.option} key='za' value='za'>Z-A</option>
+//                     </select>
+//                 </div>
+//                 {/* -------------------ORDEN POR ATAQUE------------- */}
+//                 <div>
+//                     <h5 className={style.sortfilter}>Sort by Attack</h5>--
+//                     <select className={style.select} onChange={event => orderByAttack(event)}>
+//                         <option className={style.option} key='default2' value='default2'>Default</option>
+//                         <option className={style.option} key='best' value='best'>Best Attack</option>
+//                         <option className={style.option} key='worst' value='worst'>Worst Attack</option>
+//                     </select>
+
+//                 </div>
+
+//                 {/* ---------------------FILTRO POR CREADO------------ */}
+
+//                 <div>
+//                     <h5 className={style.sortfilter}>Filter Created</h5>
+//                     <select className={style.select} onChange={event => filterByCreated(event)}>
+//                         <option className={style.option} key='all' value='all'>All</option>
+//                         <option className={style.option} key='db' value='db'>Created</option>
+//                         <option className={style.option} key='api' value='api'>Trapped</option>
+//                     </select>
+//                 </div>
+//                 {/* -----------FILTRO POR TIPO-------------- */}
+//                 <div>
+//                     <h5 className={style.sortfilter}>Filter by Type</h5>
+//                     <select className={style.select} onChange={event => filterforType(event)}>
+
+//                         <option className={style.option} key='All' value='All'>All</option>
+//                         {types && types.map(type => (
+//                             <option className={style.option} key={type.name} value={type.name}>{type.name}</option>
+
+//                         ))}
+//                     </select>
+//                 </div>
+//             </div >
+
+//             <div>
+//                 {/* ---------TERNARIO : LOADING VS CardContainer----------- */}
+//                 <div className='pokemons-home'>
+//                     {loading ? <Loading /> : <CardContainer />}
+//                 </div>
+//             </div>
+
+//         </div >
+//     );
+
+// };
+// export default Home;
